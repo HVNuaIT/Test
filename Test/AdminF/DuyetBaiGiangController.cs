@@ -29,11 +29,11 @@ namespace Test.AdminF
         }
         [HttpGet("DanhSachBaiGiang")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> getALL(int page=1)
+        public async Task<IActionResult> getALL(int page = 1)
         {
             try
             {
-                var ds = bg.GetALl();
+                var ds = bg.GetALlAdmin(page);
                 return Ok(ds);
             }
             catch (Exception ex)

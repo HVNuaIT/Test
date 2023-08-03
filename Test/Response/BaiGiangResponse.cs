@@ -32,7 +32,7 @@ namespace Test.Response
             }
         }
 
-        public async Task<FileUploadResponse> UploadFile(List<IFormFile> File,string maMonHoc, string tenBaiGiang)
+        public async Task<FileUploadResponse> UploadFile(List<IFormFile> File,string maMonHoc, string tenBaiGiang,string gv)
         {
             long size = File.Sum(f => f.Length);
 
@@ -61,7 +61,7 @@ namespace Test.Response
                                 if (check != null )
                                 {
                                    
-                                    var giaovien = db.GiaoViens.FirstOrDefault(a => a.maGiaoVien == check.maGiaoVien);
+                                    var giaovien = db.GiaoViens.FirstOrDefault(a => a.user.Email == gv);
                                     if (giaovien != null)
                                     {
                                         var user = db.Users.FirstOrDefault(b => b.Id == giaovien.maTK);
@@ -168,37 +168,20 @@ namespace Test.Response
            
             return null;
         }
-        
-        public List<BaiGiangViewModel> GetALl(int page = 1)
+        public List<BaiGiangViewModel> GetALl(string ten,int page = 1)
         {
             var checkds = db.BaiGiangs.AsQueryable();
             checkds = checkds.Skip((page - 1) * pagesize).Take(pagesize);
-            //var checkmonhoc = db.MonHocs.FirstOrDefault();
-            var tenMon = "";
-            var check = db.MonHocs.FirstOrDefault(x => x.maMonHoc == checkds.FirstOrDefault().maMonHoc);
-            var nameGV = "";
-            if (check != null)
+            var kqtv = checkds.Select(x => new BaiGiangViewModel
             {
-                tenMon = check.tenMonHoc;
-                var giaovien = db.GiaoViens.FirstOrDefault(a => a.maGiaoVien == check.maGiaoVien);
-                if (giaovien != null)
-                {
-                    var user = db.Users.FirstOrDefault(b => b.Id == giaovien.maTK);
-                    if (user != null)
-                    {
-                        nameGV = user.Name;
-                    }
-                }
-            } 
-                var kqtv = checkds.Select(x => new BaiGiangViewModel
-                {
-                   tenBaiGiang = x.tenBaiGiang,
-                   monHoc = tenMon,
-                   nguoiSoHuu  = nameGV,
-                   suaDoiLanCuoi=x.NgayUpload,
-                   kichthuoc = x.kichThuc
-                });
-                return kqtv.ToList();
+                tenBaiGiang = x.tenBaiGiang,
+                monHoc = x.MonHoc.tenMonHoc,
+                nguoiSoHuu = x.UpdateByMember,
+                suaDoiLanCuoi = x.NgayUpload,
+                kichthuoc = x.kichThuc
+                
+            }).Where(x=>x.nguoiSoHuu == ten).ToList();
+            return kqtv.ToList();
         }
         public void Delete(string tenBaiGiang)
         {
@@ -215,9 +198,20 @@ namespace Test.Response
             }
         }
 
-        public void Update(List<IFormFile> File, int id)
+        public List<BaiGiangViewModel> GetALlAdmin(int page = 1)
         {
-            throw new NotImplementedException();
+            var checkds = db.BaiGiangs.AsQueryable();
+            checkds = checkds.Skip((page - 1) * pagesize).Take(pagesize);
+            var kqtv = checkds.Select(x => new BaiGiangViewModel
+            {
+                tenBaiGiang = x.tenBaiGiang,
+                monHoc = x.MonHoc.tenMonHoc,
+                nguoiSoHuu = x.UpdateByMember,
+                suaDoiLanCuoi = x.NgayUpload,
+                kichthuoc = x.kichThuc
+
+            }).ToList();
+            return kqtv.ToList();
         }
     }
 }

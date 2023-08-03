@@ -5,11 +5,12 @@ namespace Test.Sevices
 {
     public interface IBaiGiang
     {
-       Task <FileUploadResponse> UploadFile(List<IFormFile>File,string maMonHoc,string tenBaiGiang);
+       Task <FileUploadResponse> UploadFile(List<IFormFile>File,string maMonHoc,string tenBaiGiang,string gv);
         Task<byte[]> DownloadFile(int id);
         Task<IEnumerable<FileDownloadView>> DownloadFiles(int page=1);
          BaiGiang DuyetBai(bool trangThai,int id,string ghiChu);
-        List<BaiGiangViewModel> GetALl(int page = 1);
+        List<BaiGiangViewModel> GetALl(string ten,int page = 1);
+        List<BaiGiangViewModel> GetALlAdmin( int page = 1);
         void Delete(string tenBaiGiang);
        
 

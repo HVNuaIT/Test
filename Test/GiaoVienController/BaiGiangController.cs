@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Test.DatabaseContext;
 using Test.Model;
 using Test.Model.ModelView;
 using Test.Sevices;
@@ -14,16 +16,24 @@ namespace Test.GiaoVienController
     {
         private readonly IBaiGiang baiGiang;
         private readonly IThongBao thong;
-        public BaiGiangController(IBaiGiang baiGiang, IThongBao thong)
+        private readonly Database db; 
+
+        public BaiGiangController(IBaiGiang baiGiang, IThongBao thong, Database _db)
         {
             this.baiGiang = baiGiang;
             this.thong = thong;
+            db = _db;
         }
         [HttpPost("ThemBaiGiang")]
         [Authorize(Roles ="GiaoVien")]
         public async Task<IActionResult> UploadFiles([FromForm] List<IFormFile> files,string maMonHoc,string tenBaiGiang)
         {
-            var uploadResponse = await baiGiang.UploadFile(files,maMonHoc,tenBaiGiang);
+            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+            if (check == null)
+            {
+                return BadRequest();
+            }
+            var uploadResponse = await baiGiang.UploadFile(files,maMonHoc,tenBaiGiang,check.Email);
             if (uploadResponse.ErrorMessage != "")
                 return BadRequest(new { error = uploadResponse.ErrorMessage });
             return Ok(uploadResponse);
@@ -40,11 +50,16 @@ namespace Test.GiaoVienController
         }
         
         [HttpGet("XemDanhSachBaiGiang")]
-        [Authorize(Roles = "GiaoVien,Admin")]
+        [Authorize(Roles = "GiaoVien")]
       
         public async Task<IActionResult> DanhSachBaiGiangGV(int page=1)
         {
-            return Ok(baiGiang.GetALl(page));
+            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+            if (check == null)
+            {
+                return BadRequest();
+            }
+                return Ok(baiGiang.GetALl(check.Name,page));
         }
         [HttpDelete("Xoa Bai Giang")]
         [Authorize(Roles = "GiaoVien")]
