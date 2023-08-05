@@ -160,7 +160,7 @@ namespace Test.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SDT = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    gioTinh = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    gioTinh = table.Column<bool>(type: "bit", nullable: false),
                     hinhAnh = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     maQuyen = table.Column<int>(type: "int", nullable: false)
                 },

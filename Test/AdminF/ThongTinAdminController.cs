@@ -31,6 +31,15 @@ namespace Test.AdminF
             else
             {
                 var kiemtra = db.Admins.SingleOrDefault(x => x.maTK == check.Id);
+                var gt = "";
+                if(kiemtra.user.gioTinh == true)
+                {
+                     gt = "Nam";
+                }
+                else
+                {
+                    gt = "Nữ";
+                }
                 if (kiemtra != null)
                 {
                     var qr = (from User in db.Users
@@ -38,7 +47,7 @@ namespace Test.AdminF
                               select new ChiTietThongTinAdmin
                               {
                                   maAdmin = Admin.IDAdmin,
-                                  gioTinh = User.gioTinh,
+                                  gioTinh = gt,
                                   vaitro = User.Role.Name,
                                   Email = User.Email,
                                   ten = User.Name,

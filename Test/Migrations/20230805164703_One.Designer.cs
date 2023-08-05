@@ -12,7 +12,7 @@ using Test.DatabaseContext;
 namespace Test.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20230805162252_One")]
+    [Migration("20230805164703_One")]
     partial class One
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -560,9 +560,8 @@ namespace Test.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("gioTinh")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("gioTinh")
+                        .HasColumnType("bit");
 
                     b.Property<string>("hinhAnh")
                         .IsRequired()

@@ -31,7 +31,16 @@ namespace Test.HocSinhController
             {
               
                 var kiemtra = db.HocSinhs.SingleOrDefault(x => x.maTK == check.Id);
-               
+                var gt = "";
+                if (kiemtra.user.gioTinh == true)
+                {
+                    gt = "Nam";
+                }
+                else
+                {
+                    gt = "Nữ";
+                }
+
                 if (kiemtra !=null)
                 {
                     var qr = (from User in db.Users
@@ -46,7 +55,7 @@ namespace Test.HocSinhController
                                  Khoa=HocSinh.Khoa.tenKhoa,
                                  maLop = HocSinh.maLop,
                                  SDT = User.SDT,
-                                 gioTinh = User.gioTinh,
+                                 gioTinh = gt,
  
                              }).Where(x=>x.Email==check.Email);
                     return Ok(qr);

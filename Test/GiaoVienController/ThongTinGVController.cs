@@ -31,6 +31,15 @@ namespace Test.GiaoVienController
             else
             {
              var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
+                var gt = "";
+                if (kiemtra.user.gioTinh == true)
+                {
+                    gt = "Nam";
+                }
+                else
+                {
+                    gt = "Nữ";
+                }
                 if (kiemtra !=null)
                 {
                     var qr = (from User in db.Users
@@ -38,7 +47,7 @@ namespace Test.GiaoVienController
                              select new ChiTietThongTinGV
                              {
                                  maGv = GiaoVien.maGiaoVien,
-                                 gioTinh = User.gioTinh,
+                                 gioTinh = gt,
                                  Khoa = GiaoVien.Khoa.tenKhoa,
                                  Email = User.Email,
                                  ten = User.Name,

@@ -558,9 +558,8 @@ namespace Test.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("gioTinh")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("gioTinh")
+                        .HasColumnType("bit");
 
                     b.Property<string>("hinhAnh")
                         .IsRequired()

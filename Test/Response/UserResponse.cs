@@ -26,7 +26,7 @@ namespace Test.Response
 
         }
 
-        public UserDTO Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, string gioiTinh,int Quyen)
+        public UserDTO Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh,int Quyen)
         {
             try
             {
@@ -64,8 +64,17 @@ namespace Test.Response
         {
 
             var check = db.Users.SingleOrDefault(x => x.Id.Equals(id));
+            var gt = "";
+            if (check.gioTinh == true) {
+                gt = "Nam";
+            }
+            else
+            {
+                gt = "Nữ";
+            }
             if(check != null )
             {
+                
                 return new UserDTO
                 {
                     Id = check.Id,
@@ -75,7 +84,7 @@ namespace Test.Response
                     Password = check.Password,
                     SDT = check.SDT,
                     maQuyen = check.maQuyen,
-                    gioTinh = check.gioTinh,
+                    gioTinh = gt,
                 };
             }
             return null;
@@ -144,7 +153,7 @@ namespace Test.Response
 
             return new string(arr);
         }
-        public UserDTO UpdateAllUser(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, string gioiTinh, int Quyen)
+        public UserDTO UpdateAllUser(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh, int Quyen)
         {
             var checkuser =db.Users.SingleOrDefault(x=>x.Id == id);
             if (checkuser != null) {
@@ -159,12 +168,24 @@ namespace Test.Response
                 checkuser.gioTinh = gioiTinh;
                 db.Entry(checkuser).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
+                var gt = "";
+                if(checkuser.gioTinh == true)
+                {
+                    gt = "Nam";
+
+                }
+                else
+                {
+                    gt = "Nữ";
+
+                }
                 return new UserDTO
                 {
                     Name = checkuser.Name,
                     DiaChi = checkuser.DiaChi,
                     SDT = checkuser.SDT,
-                    gioTinh = gioiTinh,
+                    
+                    gioTinh = gt,
                     hinhAnh= checkuser.hinhAnh,
                     maQuyen = checkuser.maQuyen,
                     Email = checkuser.Email,
@@ -193,5 +214,7 @@ namespace Test.Response
 
             return kqtv.ToList();
         }
+
+      
     }
 }

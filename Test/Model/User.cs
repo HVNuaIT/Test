@@ -14,7 +14,7 @@ namespace Test.Model
         public string Password { get; set; }
         public string DiaChi { get; set; }
         public string SDT { get; set; }
-        public string gioTinh { get;set; }
+        public bool gioTinh { get;set; }
         public string hinhAnh { get; set; }
         [NotMapped]
         public IFormFile File { get; set; }

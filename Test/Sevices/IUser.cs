@@ -8,12 +8,12 @@ namespace Test.Sevices
     {
       //  IEnumerable<ChiTietTaiKhoan> getAll(/*int page =1*/);
       List<UserViewModel>GetAll(int page = 1);
-        UserDTO Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, string gioiTinh,int  Quyen);
+        UserDTO Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh,int  Quyen);
 
         //void Delete(string id);
         UserDTO GetByCase(string id);
         void CapLaiMatKhau(string Email);
-       UserDTO UpdateAllUser(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, string gioiTinh, int Quyen);
+       UserDTO UpdateAllUser(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh, int Quyen);
        
     }
 }

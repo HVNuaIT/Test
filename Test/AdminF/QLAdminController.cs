@@ -29,7 +29,7 @@ namespace Test.AdminF
         }
         [HttpPost("TaoTaiKhoanChoNguoiDung")]
         [Authorize(Roles = "Admin")]
-        public IActionResult Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, string gioiTinh, int vaitro)
+        public IActionResult Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh, int vaitro)
         {
                 if (ModelState.IsValid)
                 {
@@ -155,7 +155,7 @@ namespace Test.AdminF
 
         [HttpPut("CapNhatToanBoUser")]
         [Authorize(Roles = "Admin")]
-        public IActionResult UpdateALL(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, string gioiTinh, int vaitro)
+        public IActionResult UpdateALL(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh, int vaitro)
         {
             try
             {
