@@ -76,7 +76,7 @@ namespace Test.HocSinhController
                                  }).Where(x=>x.tenBaiGiang == tenBaiGiang).ToList();
                         return Ok(qr.ToList());
                     }
-            return BadRequest("Hoc Sinh Ko co Mon Hoc Nao");
+            return BadRequest("Học Sinh Không Có Môn Học Nào");
         }
         [HttpGet("DownTheoID")]
         [Authorize]
