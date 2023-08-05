@@ -9,7 +9,8 @@ namespace Test.Model
         [Key]
         public int maCauHoiTN { get; set; }
       
-        public string tieuDeCauHoi { get; set; }
+        public string ThuTuCauHoi { get; set; }
+        public string NoiDungCauHoi { get; set; }
         public string dapAn1 { get; set; }
         public string dapAn2 { get; set; }
         public string dapAn3 { get; set; }

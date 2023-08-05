@@ -10,8 +10,10 @@ namespace Test.Sevices
     {
         DeThi themDeThiTuLuan(string TenBaiThi, string mon, string hinhThuc,  List<TuLuan> s, string gio, string phut);
         DeThi themDeThiTracNghiem(string tenBaiThi, string Mon, string hinhThuc, List<CauHoiTracNghiem> s, string gio, string phut);
-        List<DeThiViewModel> getAll(int page=1);
+        List<DeThiViewModel> getAll(string name,int page=1);
         DeThi XemChiTietDeThi(int id);
         void DuyetBai(int id,string trangThai);
+        List<DeThiViewModel> getAllDTAdmin( int page = 1);
+        
     }
 }

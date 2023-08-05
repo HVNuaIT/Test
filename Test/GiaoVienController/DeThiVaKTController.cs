@@ -33,15 +33,7 @@ namespace Test.GiaoVienController
         public IActionResult getALL(int page=1)
         {
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            if (check == null)
-            {
-                return BadRequest();
-            }
-            var checkmon = db.DeThis.SingleOrDefault(x=>x.TenGiaoVien == check.Name);
-            if (checkmon != null || check.maQuyen ==1) {
-                return Ok(dt.getAll(page));
-            }
-            return NotFound("Chua Up De Thi ");
+                return Ok(dt.getAll(check.Name,page));
         }
         [HttpGet("XemChiTiet")]
         [Authorize(Roles = "GiaoVien,Admin")]

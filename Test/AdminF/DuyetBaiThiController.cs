@@ -21,5 +21,12 @@ namespace Test.AdminF
             dt.DuyetBai(id, trangThai);
             return Ok("Da duyet bai thanh cong");
         }
+        [Authorize(Roles = "Admin")]
+        [HttpGet("DanhSachDeThi")]
+        public IActionResult GetAll(int page = 1)
+        {
+          
+            return Ok(dt.getAllDTAdmin(page));
+        }
     }
 }

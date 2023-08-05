@@ -47,7 +47,7 @@ namespace Test.Response
             var kqtv = check.Select(x => new KhoaDTO
             {
                 maKhoa = x.maKhoa,
-                tenKhoa = x.maKhoa,
+                tenKhoa = x.tenKhoa,
             }).ToList();
             return kqtv.ToList();
         }
