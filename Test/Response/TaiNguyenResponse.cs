@@ -131,12 +131,12 @@ namespace Test.Response
             }
         }
 
-        public async Task<byte[]> DownloadFile(string name)
+        public async Task<byte[]> DownloadFile(int id)
         {
             try
             {
                 var selectedFile = db.TaiNguyens
-                    .Where(f => f.tenTaiNguyen == name).SingleOrDefault();
+                    .Where(f => f.IdTaiNguyen == id).SingleOrDefault();
 
                 if (selectedFile == null)
                     return null;
@@ -154,6 +154,7 @@ namespace Test.Response
             check = check.Skip((page - 1)*pagasize).Take(pagasize);
             var kq = check.Select(x => new TaiNguyenViewModel
             {
+                IdTaiNguyen = x.IdTaiNguyen,
                 tenTaiNguyen = x.tenTaiNguyen,
                 ghiChu = x.ghiChu,
                 hinhThuc = x.hinhThuc,  

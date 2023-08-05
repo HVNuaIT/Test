@@ -70,6 +70,7 @@ namespace Test.HocSinhController
                                      NgayUpload = BaiGiang.NgayUpload,
                                      kichThuc = BaiGiang.kichThuc,
                                      UpdateByMember = BaiGiang.UpdateByMember,
+                                     maTaiNguyen=TaiNguyen.IdTaiNguyen,
                                      TaiNguyen = TaiNguyen.tenTaiNguyen,
                                      
                                  }).Where(x=>x.tenBaiGiang == tenBaiGiang).ToList();
@@ -77,13 +78,16 @@ namespace Test.HocSinhController
                     }
             return BadRequest("Hoc Sinh Ko co Mon Hoc Nao");
         }
-        [HttpGet("DownTheoId")]
+        [HttpGet("DownTheoID")]
         [Authorize]
-        public async Task<IActionResult> DownloadFile(string name)
+        public async Task<IActionResult> DownloadFile(int id)
         {
-            var stream = await tn.DownloadFile(name);
+            var stream = await tn.DownloadFile(id);
             if (stream == null)
-                return NotFound();
+            {
+                return NoContent();
+            }
+
             return new FileContentResult(stream, "application/octet-stream");
         }
 

@@ -8,6 +8,6 @@ namespace Test.Sevices
         Task<FileUploadResponse> Add(List<IFormFile> File, string maMonHoc, string tenBaiGiang, string gv, int maChuDe, int maBaiGiang);
         void Delete(string name);
         List<TaiNguyenViewModel> GetAll(string name,int page =1);
-        Task<byte[]> DownloadFile(string name);
+        Task<byte[]> DownloadFile(int id);
     }
 }
