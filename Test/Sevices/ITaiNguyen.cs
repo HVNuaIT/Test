@@ -9,5 +9,6 @@ namespace Test.Sevices
         void Delete(string name);
         List<TaiNguyenViewModel> GetAll(string name,int page =1);
         Task<byte[]> DownloadFile(int id);
+        TaiNguyen DuyetTaiNguyen(bool trangThai, int id, string ghiChu);
     }
 }

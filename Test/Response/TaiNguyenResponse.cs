@@ -167,5 +167,26 @@ namespace Test.Response
             }).Where(x=>x.NguoiSoHuu == name).ToList();
             return kq.ToList();
         }
+
+        public TaiNguyen DuyetTaiNguyen(bool trangThai, int id, string ghiChu)
+        {
+            var check = db.TaiNguyens.SingleOrDefault(x => x.IdTaiNguyen == id);
+            if (check != null)
+            {
+                check.TrangThai = trangThai;
+                check.ghiChu = ghiChu;
+                if (trangThai == false)
+                {
+                    check.TrangThai = false;
+                    check.ghiChu = ghiChu;
+
+                }
+                db.Entry(check).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                db.SaveChanges();
+            }
+
+
+            return null;
+        }
     }
 }

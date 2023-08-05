@@ -7,8 +7,6 @@
         public string tenBaiGiang { get; set; }
         public int kichThuc { get; set; }
         public DateTime NgayUpload { get; set; }
-      
-     
         public string UpdateByMember { get; set; }
         public int maTaiNguyen { get; set; }
         public string TaiNguyen { get; set; }
