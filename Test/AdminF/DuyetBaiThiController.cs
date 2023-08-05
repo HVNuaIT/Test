@@ -16,9 +16,10 @@ namespace Test.AdminF
         }
         [Authorize(Roles ="Admin")]
         [HttpPut]
-        public IActionResult DuyetBaiThiTuLuan(string trangThai, int id)
-        {    
-            return Ok(dt.DuyetTuLuat(id,trangThai));
+        public IActionResult DuyetBaiThi(string trangThai, int id)
+        {
+            dt.DuyetBai(id, trangThai);
+            return Ok("Da duyet bai thanh cong");
         }
     }
 }

@@ -16,11 +16,13 @@ namespace Test.HocSinhController
     {
         private readonly IMonHoc mon;
         private readonly Database db;
+        private readonly ITaiNguyen tn;
         public static int size { get;  set; } = 5;
-        public XemMonHocController(IMonHoc _mon, Database _db)
+        public XemMonHocController(IMonHoc _mon, Database _db,ITaiNguyen _tn )
         {
             mon = _mon;
             db = _db;
+            tn = _tn;
         }
         [HttpGet("DanhSachMonHocDuocPhanCong_HocSinh")]
         [Authorize(Roles = "HocSinh")]
@@ -28,12 +30,7 @@ namespace Test.HocSinhController
         {
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
 
-            if (check == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
+         
                 var ma = db.MonHocs.FirstOrDefault();
                 var kiemtra = db.HocSinhs.SingleOrDefault(x => x.maTK == check.Id);
                 if (kiemtra.maLop == ma.maLop)
@@ -50,41 +47,45 @@ namespace Test.HocSinhController
                              }).Skip((page-1)*size).Take(size);
                     return Ok(qr.ToList());
                 }
-            }
+            
             return BadRequest("Hoc Sinh Chua Duoc Phan Cong Mon Nao De Hoc");
         }
         [HttpGet("ChiTietMonHocDuocPhanCong_HocSinh")]
         [Authorize(Roles = "HocSinh")]
-        public IActionResult ChiTietMonHoc_HS(string maMon)
+        public IActionResult ChiTietMonHoc_HS(string maMon,string tenBaiGiang)
         {
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-            if (check == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
                 var ma = db.MonHocs.ToList();
                 var kiemtra = db.HocSinhs.SingleOrDefault(x => x.maTK == check.Id);
-                if (kiemtra.maLop == ma.FirstOrDefault().maLop && ma.FirstOrDefault().maMonHoc==maMon)
-                {
-                    var qr = from ChuDe in db.ChuDes
-                             join BaiGiang in db.BaiGiangs on ChuDe.maMonHoc equals BaiGiang.maMonHoc
-                             select new ChiTietBaiGiang_ChuDe_HocSinh
-                             {
-                                 tieuDe = ChuDe.tieuDe,
-                                 NoiDung = ChuDe.NoiDung,
-                                 tenBaiGiang = BaiGiang.tenBaiGiang,
-                                 NgayUpload = BaiGiang.NgayUpload,
-                                 kichThuc  = BaiGiang.kichThuc,
-                                 UpdateByMember = BaiGiang.UpdateByMember,
-                                
-                             };
-                    return Ok(qr.ToList());
-                }
-            }
+                    if (kiemtra.maLop == ma.FirstOrDefault().maLop && ma.FirstOrDefault().maMonHoc == maMon  )
+                    {
+                        var qr =( from ChuDe in db.ChuDes
+                                 join BaiGiang in db.BaiGiangs on ChuDe.Id equals BaiGiang.maChuDe
+                                 join TaiNguyen in db.TaiNguyens on ChuDe.Id equals TaiNguyen.maChuDe
+                                 select new ChiTietBaiGiang_ChuDe_HocSinh
+                                 {
+                                     tieuDe = ChuDe.tieuDe,
+                                     NoiDung = ChuDe.NoiDung,
+                                     tenBaiGiang = BaiGiang.tenBaiGiang,
+                                     NgayUpload = BaiGiang.NgayUpload,
+                                     kichThuc = BaiGiang.kichThuc,
+                                     UpdateByMember = BaiGiang.UpdateByMember,
+                                     TaiNguyen = TaiNguyen.tenTaiNguyen,
+                                     
+                                 }).Where(x=>x.tenBaiGiang == tenBaiGiang).ToList();
+                        return Ok(qr.ToList());
+                    }
             return BadRequest("Hoc Sinh Ko co Mon Hoc Nao");
         }
+        [HttpGet("DownTheoId")]
+        [Authorize]
+        public async Task<IActionResult> DownloadFile(string name)
+        {
+            var stream = await tn.DownloadFile(name);
+            if (stream == null)
+                return NotFound();
+            return new FileContentResult(stream, "application/octet-stream");
+        }
+
     }
 }

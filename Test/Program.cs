@@ -35,6 +35,9 @@ builder.Services.AddScoped<IRole, RoleResponse>();
 builder.Services.AddScoped<ICauHoi, CauHoiResponse>();
 builder.Services.AddScoped<ITraLoi, TraLoiResponse>();
 builder.Services.AddScoped<IDeThi_KiemTra, DeThi_KiemTraResponse>();
+builder.Services.AddScoped<INganHangCauHoi, NganHangCauHoiResponse>();
+builder.Services.AddScoped<IThongBaoAdmin, ThongBaoAdminResponse>();
+builder.Services.AddScoped<ITaiNguyen, TaiNguyenResponse>();
 #endregion
 builder.Services.AddDbContext<Database>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DB")));

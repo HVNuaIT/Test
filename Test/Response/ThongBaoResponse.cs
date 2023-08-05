@@ -36,7 +36,6 @@ namespace Test.Response
             }).ToList();
             return kq.ToList();
         }
-
         public void DeleteAll()
         {
            var check = db.ThongBaos.ToList();

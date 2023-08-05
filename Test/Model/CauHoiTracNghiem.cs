@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Test.Model
 {
-    [Table("CauHoiTracNghiem")]
+   // [Table("CauHoiTracNghiem")]
     public class CauHoiTracNghiem
     {
         [Key]

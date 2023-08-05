@@ -21,30 +21,21 @@ namespace Test.GiaoVienController
             this.db = db;
         }
         [HttpPost("DatCauHoiMonHoc")]
-        [Authorize(Roles ="GiaoVien")]
+        [Authorize(Roles ="GiaoVien,HocSinh")]
         public IActionResult DatDauHoi (string tieuDe, string noiDung, string mon)
         {
             var ten = "";
             var like = false;
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
 
-            if (check == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
                 var checkM = db.MonHocs.FirstOrDefault();
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
-                
                 if (checkM.maGiaoVien == kiemtra.maGiaoVien)
                 {
                     ten = check.Name;
                     return Ok(cauHoi.DatCauHoi(tieuDe, ten, like, noiDung,mon));
                 }
-            }
             return BadRequest();
-
 
         }
         [HttpGet("DanhSachCauHoi&Dap")]
@@ -69,8 +60,6 @@ namespace Test.GiaoVienController
                 }
             }
             return BadRequest();
-
-
         }
         [HttpPut("CapNhatCauHoi&Dap")]
         [Authorize(Roles = "GiaoVien")]

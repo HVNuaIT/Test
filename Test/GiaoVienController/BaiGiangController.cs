@@ -26,14 +26,14 @@ namespace Test.GiaoVienController
         }
         [HttpPost("ThemBaiGiang")]
         [Authorize(Roles ="GiaoVien")]
-        public async Task<IActionResult> UploadFiles([FromForm] List<IFormFile> files,string maMonHoc,string tenBaiGiang)
+        public async Task<IActionResult> UploadFiles([FromForm] List<IFormFile> files,string maMonHoc,string tenBaiGiang,int maChuDe)
         {
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
             if (check == null)
             {
                 return BadRequest();
             }
-            var uploadResponse = await baiGiang.UploadFile(files,maMonHoc,tenBaiGiang,check.Email);
+            var uploadResponse = await baiGiang.UploadFile(files,maMonHoc,tenBaiGiang,check.Email,maChuDe);
             if (uploadResponse.ErrorMessage != "")
                 return BadRequest(new { error = uploadResponse.ErrorMessage });
             return Ok(uploadResponse);

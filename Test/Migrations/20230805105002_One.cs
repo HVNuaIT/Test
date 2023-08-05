@@ -10,7 +10,26 @@ namespace Test.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DeThi",
+                name: "CauHoiTN",
+                columns: table => new
+                {
+                    maCauHoiTN = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    tieuDeCauHoi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    A = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    B = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    C = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    D = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    dapAnChinhXac = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdNganHangCauHoi = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CauHoiTN", x => x.maCauHoiTN);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DeThi&KiemTra",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -19,12 +38,13 @@ namespace Test.Migrations
                     hinhThuc = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     maMonHoc = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TenGiaoVien = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ThoiGiangThi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TinhTrang = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ThoiGiangThi = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TinhTrang = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeThi", x => x.Id);
+                    table.PrimaryKey("PK_DeThi&KiemTra", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -49,6 +69,21 @@ namespace Test.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lop", x => x.maLop);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NganHangCauHoi",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    mon = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    doKho = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    nguoiSoHuu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    suaDoiLanCuoi = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NganHangCauHoi", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,24 +116,16 @@ namespace Test.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeThiTuLuan",
+                name: "ThongBaoAdmin",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    maTBaoAdmin = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ThuTuCauHoi = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NoiDung = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdDethi = table.Column<int>(type: "int", nullable: false),
-                    DeThiId = table.Column<int>(type: "int", nullable: true)
+                    tieuDe = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeThiTuLuan", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DeThiTuLuan_DeThi_DeThiId",
-                        column: x => x.DeThiId,
-                        principalTable: "DeThi",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_ThongBaoAdmin", x => x.maTBaoAdmin);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,6 +269,7 @@ namespace Test.Migrations
                     ghiChu = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     UpdateByMember = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    maChuDe = table.Column<int>(type: "int", nullable: false),
                     maMonHoc = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
@@ -363,11 +391,6 @@ namespace Test.Migrations
                 column: "maMonHoc");
 
             migrationBuilder.CreateIndex(
-                name: "IX_DeThiTuLuan_DeThiId",
-                table: "DeThiTuLuan",
-                column: "DeThiId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_DuyetBai_maBaiGiang",
                 table: "DuyetBai",
                 column: "maBaiGiang");
@@ -421,13 +444,16 @@ namespace Test.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "CauHoiTN");
+
+            migrationBuilder.DropTable(
                 name: "CauTraLoi");
 
             migrationBuilder.DropTable(
                 name: "ChuDe");
 
             migrationBuilder.DropTable(
-                name: "DeThiTuLuan");
+                name: "DeThi&KiemTra");
 
             migrationBuilder.DropTable(
                 name: "DuyetBai");
@@ -436,16 +462,19 @@ namespace Test.Migrations
                 name: "HocSinh");
 
             migrationBuilder.DropTable(
+                name: "NganHangCauHoi");
+
+            migrationBuilder.DropTable(
                 name: "QuanTriAdmin");
 
             migrationBuilder.DropTable(
                 name: "ThongBao");
 
             migrationBuilder.DropTable(
-                name: "CauHoi");
+                name: "ThongBaoAdmin");
 
             migrationBuilder.DropTable(
-                name: "DeThi");
+                name: "CauHoi");
 
             migrationBuilder.DropTable(
                 name: "BaiGiang");

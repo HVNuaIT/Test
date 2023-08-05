@@ -12,8 +12,8 @@ using Test.DatabaseContext;
 namespace Test.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20230802170340_Two")]
-    partial class Two
+    [Migration("20230805105002_One")]
+    partial class One
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,6 +69,9 @@ namespace Test.Migrations
                     b.Property<int>("kichThuc")
                         .HasColumnType("int");
 
+                    b.Property<int>("maChuDe")
+                        .HasColumnType("int");
+
                     b.Property<string>("maMonHoc")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -119,6 +122,47 @@ namespace Test.Migrations
                     b.HasIndex("Mon");
 
                     b.ToTable("CauHoi");
+                });
+
+            modelBuilder.Entity("Test.Model.CauHoiTN", b =>
+                {
+                    b.Property<int>("maCauHoiTN")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("maCauHoiTN"), 1L, 1);
+
+                    b.Property<string>("A")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("B")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("C")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("D")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNganHangCauHoi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("dapAnChinhXac")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("tieuDeCauHoi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("maCauHoiTN");
+
+                    b.ToTable("CauHoiTN");
                 });
 
             modelBuilder.Entity("Test.Model.ChuDe", b =>
@@ -322,6 +366,31 @@ namespace Test.Migrations
                     b.ToTable("MonHoc");
                 });
 
+            modelBuilder.Entity("Test.Model.NganHangCauHoiTN", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("doKho")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("mon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nguoiSoHuu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("suaDoiLanCuoi")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NganHangCauHoi");
+                });
+
             modelBuilder.Entity("Test.Model.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -365,6 +434,23 @@ namespace Test.Migrations
                     b.HasKey("maThongBao");
 
                     b.ToTable("ThongBao");
+                });
+
+            modelBuilder.Entity("Test.Model.ThongBaoAdmin", b =>
+                {
+                    b.Property<int>("maTBaoAdmin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("maTBaoAdmin"), 1L, 1);
+
+                    b.Property<string>("tieuDe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("maTBaoAdmin");
+
+                    b.ToTable("ThongBaoAdmin");
                 });
 
             modelBuilder.Entity("Test.Model.TraLoi", b =>

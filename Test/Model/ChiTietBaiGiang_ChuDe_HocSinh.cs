@@ -8,8 +8,9 @@
         public int kichThuc { get; set; }
         public DateTime NgayUpload { get; set; }
       
-        //public string ghiChu { get; set; }
-        //public byte[] Content { get; set; }
+     
         public string UpdateByMember { get; set; }
+        public string TaiNguyen { get; set; }
+       
     }
 }

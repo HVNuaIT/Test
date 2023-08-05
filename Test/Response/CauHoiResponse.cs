@@ -53,7 +53,7 @@ namespace Test.Response
            
         }
 
-        public List<ListHoiDap>  GetAll(int page = 1)
+        public List<ListHoiDap>  GetAll( int page = 1)
         {
             var qr = (from a in db.CauHois
                       join b in db.TraLois on a.maCauHoi equals b.maCauHoi

@@ -32,13 +32,10 @@ namespace Test.GiaoVienController
             }
             else
             {
-
-               
                     return Ok(traLoi.TraLoiCauHoi(check.Name,noiDung,maCauHoi));
-               
             }
             return BadRequest();
-          //  return Ok(traLoi.TraLoiCauHoi(x));
+    
 
         }
         [HttpDelete("XoaTraLoi")]

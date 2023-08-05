@@ -64,7 +64,14 @@ namespace Test.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("hinhThuc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("kichThuc")
+                        .HasColumnType("int");
+
+                    b.Property<int>("maChuDe")
                         .HasColumnType("int");
 
                     b.Property<string>("maMonHoc")
@@ -117,6 +124,47 @@ namespace Test.Migrations
                     b.HasIndex("Mon");
 
                     b.ToTable("CauHoi");
+                });
+
+            modelBuilder.Entity("Test.Model.CauHoiTN", b =>
+                {
+                    b.Property<int>("maCauHoiTN")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("maCauHoiTN"), 1L, 1);
+
+                    b.Property<string>("A")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("B")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("C")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("D")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdNganHangCauHoi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("dapAnChinhXac")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("tieuDeCauHoi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("maCauHoiTN");
+
+                    b.ToTable("CauHoiTN");
                 });
 
             modelBuilder.Entity("Test.Model.ChuDe", b =>
@@ -320,6 +368,31 @@ namespace Test.Migrations
                     b.ToTable("MonHoc");
                 });
 
+            modelBuilder.Entity("Test.Model.NganHangCauHoiTN", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("doKho")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("mon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("nguoiSoHuu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("suaDoiLanCuoi")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NganHangCauHoi");
+                });
+
             modelBuilder.Entity("Test.Model.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -344,6 +417,55 @@ namespace Test.Migrations
                     b.ToTable("Quyen");
                 });
 
+            modelBuilder.Entity("Test.Model.TaiNguyen", b =>
+                {
+                    b.Property<int>("IdTaiNguyen")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTaiNguyen"), 1L, 1);
+
+                    b.Property<byte[]>("Content")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("NgayUpload")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdateByMember")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ghiChu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("hinhThuc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("maBaiGiang")
+                        .HasColumnType("int");
+
+                    b.Property<int>("maChuDe")
+                        .HasColumnType("int");
+
+                    b.Property<string>("maMonHoc")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("tenTaiNguyen")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdTaiNguyen");
+
+                    b.ToTable("TaiNguyen");
+                });
+
             modelBuilder.Entity("Test.Model.ThongBao", b =>
                 {
                     b.Property<int>("maThongBao")
@@ -363,6 +485,23 @@ namespace Test.Migrations
                     b.HasKey("maThongBao");
 
                     b.ToTable("ThongBao");
+                });
+
+            modelBuilder.Entity("Test.Model.ThongBaoAdmin", b =>
+                {
+                    b.Property<int>("maTBaoAdmin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("maTBaoAdmin"), 1L, 1);
+
+                    b.Property<string>("tieuDe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("maTBaoAdmin");
+
+                    b.ToTable("ThongBaoAdmin");
                 });
 
             modelBuilder.Entity("Test.Model.TraLoi", b =>

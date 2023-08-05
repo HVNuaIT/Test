@@ -24,6 +24,9 @@ namespace Test.AutoMapper
             CreateMap<ThongBao_LopViewModel, ThongBao>();
             CreateMap<CauHoiDTO, CauHoi>();
             CreateMap<TraLoiDTO, TraLoi>();
+            CreateMap<NganHangCauHoiDTO, NganHangCauHoiTN>();
+            CreateMap<ThongBaoAdminDTO, ThongBaoAdmin>();
+
         }
     }
 }

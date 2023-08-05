@@ -23,8 +23,12 @@ namespace Test.DatabaseContext
         public DbSet<CauHoi> CauHois { get; set; }
         public DbSet<TraLoi> TraLois { get; set; }
         public DbSet<DeThi> DeThis { get; set; }
-       // public DbSet<DeThiTracNghiem> DeThiTracNghiems { get; set; }
-       // public DbSet<TuLuan> TuLuans { get; set; }
+        public DbSet<NganHangCauHoiTN> NganHangCauHois { get; set; }
+        public DbSet<CauHoiTN> CauHoiTN { get; set; }
+        public DbSet<ThongBaoAdmin> ThongBaoAdmins { get; set; }
+        public DbSet<TaiNguyen> TaiNguyens { get; set; }
+        // public DbSet<DeThiTracNghiem> DeThiTracNghiems { get; set; }
+        // public DbSet<TuLuan> TuLuans { get; set; }
         //public DbSet<CauHoiTracNghiem> TracNghiems { get; set; }
         //public DbSet<MonHoc_HS> MonHoc_HSs { get; set; }
 

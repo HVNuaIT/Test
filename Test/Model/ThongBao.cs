@@ -10,9 +10,7 @@ namespace Test.Model
         public int maThongBao { get; set; }
         public string tieuDeThongBao { get; set; }
         public string TenNguoiThongBao { get; set; }
-        //public string maLop { get; set; }
-
-        //public bool trangThai { get; set; } = false;
+        
         
         
     }

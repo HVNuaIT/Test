@@ -2,7 +2,6 @@
 using PdfSharpCore;
 using System.IO;
 using Test.DatabaseContext;
-
 using Test.Model;
 using Test.Model.DTO;
 using Test.Model.ModelView;
@@ -21,38 +20,21 @@ namespace Test.Response
             this.db = db;
         }
 
-        public DeThi DuyetTuLuat(int id,string trangThai)
+        public void DuyetBai(int id,string trangThai)
         {
-            try
-            {
-                var check = db.DeThis.Where(x => x.Id == id).FirstOrDefault();
-
+                var check = db.DeThis.SingleOrDefault(x => x.Id.Equals(id));
                 if (check != null)
                 {
                     var thongBao = new ThongBao();
                     thongBao.tieuDeThongBao = check.TenBaiThi + "Da Duoc Admin Duyet ";
+                    thongBao.TenNguoiThongBao = check.TenGiaoVien;
                     check.TinhTrang = trangThai;
-                    db.Entry(check).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.ThongBaos.Add(thongBao);
+                    
+                    db.Entry(check).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
-                    return new DeThi
-                    {
-                        hinhThuc = check.hinhThuc,
-                        TinhTrang = check.TinhTrang,
-                        TenBaiThi = check.TenBaiThi,
-                        TenGiaoVien = check.TenGiaoVien,
-                        ThoiGiangThi = check.ThoiGiangThi,
-                        maMonHoc = check.maMonHoc,
-                       // CauHoi = db.TuLuans.Where(a => a.IdDethi == check.Id).ToList(),
-
-                    };
                 }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+              
         }
         public List<DeThiViewModel> getAll(int page = 1)
         {
@@ -143,6 +125,9 @@ namespace Test.Response
                 dethi.TenGiaoVien = checkgv.user.Name;
                 dethi.TinhTrang = "Cho Duyet";
                 dethi.hinhThuc = hinhThuc;
+                var thongBaoAdmin = new ThongBaoAdmin();
+                thongBaoAdmin.tieuDe = "Giao Vien" + dethi.TenGiaoVien + "gui phe duyet bai thi " + dethi.TenBaiThi;
+                db.ThongBaoAdmins.Add(thongBaoAdmin);
                 db.DeThis.Add(dethi);
                 db.SaveChanges();
             }
@@ -152,8 +137,7 @@ namespace Test.Response
 
         public DeThi themDeThiTuLuan(string TenBaiThi, string mon, string hinhThuc, List<TuLuan> s, string gio, string phut)
         {
-            //var mons = db.MonHocs.SingleOrDefault();
-           // var checkgv = db.GiaoViens.SingleOrDefault(x => x.maGiaoVien == mons.maGiaoVien);
+          
             
             var document = new PdfDocument();
             string htmlcontent = "<div style='width:100%; text-align:Left'>";
@@ -218,6 +202,9 @@ namespace Test.Response
                 dethi.TenGiaoVien = checkgv.user.Name;
                 dethi.TinhTrang = "Cho Duyet";
                 dethi.hinhThuc = hinhThuc;
+                var thongBaoAdmin = new ThongBaoAdmin();
+                thongBaoAdmin.tieuDe = "Giao Vien" + dethi.TenGiaoVien + "gui phe duyet bai thi " + dethi.TenBaiThi;
+                db.ThongBaoAdmins.Add(thongBaoAdmin);
                 db.DeThis.Add(dethi);
                 db.SaveChanges();
             }

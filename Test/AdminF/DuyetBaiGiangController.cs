@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using Test.DatabaseContext;
 using Test.Sevices;
 
 namespace Test.AdminF
@@ -9,19 +11,21 @@ namespace Test.AdminF
     [ApiController]
     public class DuyetBaiGiangController : ControllerBase
     {
-        private readonly IBaiGiang bg; 
+        private readonly IBaiGiang bg;
+        
         public DuyetBaiGiangController(IBaiGiang bg)
         {
             this.bg = bg;
+          
         }
         [HttpPost("DuyetBaiGiang")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult>Duyet(bool trangThai,int id, string ghiChu)
+        public async Task<IActionResult>Duyet( bool trangThai,int id, string ghiChu)
         {
             try
             {
                 var duyetBai=  bg.DuyetBai(trangThai, id,ghiChu);
-                return Ok(duyetBai);
+                return Ok("Da duyet bai giang thanh cong");
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);

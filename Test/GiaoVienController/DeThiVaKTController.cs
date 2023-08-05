@@ -70,13 +70,7 @@ namespace Test.GiaoVienController
         public async Task<IActionResult> DethiNghiem(string TenBaiThi, string mon, string hinhThuc, [FromBody] List<CauHoiTracNghiem> s, string gio, string phut)
         {
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            if (check == null)
-            {
-                return BadRequest();
-            }
-
             return Ok(dt.themDeThiTracNghiem(TenBaiThi, mon, hinhThuc, s, gio, phut));
-
         }
 
 
