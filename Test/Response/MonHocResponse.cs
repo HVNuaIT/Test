@@ -11,6 +11,7 @@ namespace Test.Response
     {
         private readonly Database db;
         private readonly IMapper mapper;
+        public static int pagesize { get; set; } = 5;
         public MonHocResponse(Database db, IMapper mapper)
         {
             this.db = db;
@@ -56,5 +57,20 @@ namespace Test.Response
 
             }
         }
+        public List<MonHocDTO> Getall(int page = 1)
+        {
+            var check = db.MonHocs.AsQueryable();
+            check = check.Skip((page - 1) * pagesize).Take(pagesize);
+            var kq = check.Select(x => new MonHocDTO
+            {
+                maMonHoc =x.maMonHoc,   
+               tenMonHoc = x.tenMonHoc,
+               maGiaoVien=x.maGiaoVien,
+               maLop = x.maLop,
+              moTa = x.moTa 
+            }).ToList();
+            return kq.ToList();
+        }
+
     }
 }

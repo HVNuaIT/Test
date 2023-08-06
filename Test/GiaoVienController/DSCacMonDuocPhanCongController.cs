@@ -25,24 +25,15 @@ namespace Test.GiaoVienController
         [Authorize(Roles = "GiaoVien")]
         public IActionResult DanhSachPhanCongMonHoc()
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-            if (check == null)
+            try
             {
-                return BadRequest();
-            }
-            else
-            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
                 var ma = db.MonHocs.ToList();
                 var kiemtra = db.GiaoViens.SingleOrDefault(x => x.maTK == check.Id);
-                //if (kiemtra == null)
-                //{
-                //    return BadRequest();
-                //}
-                 if (kiemtra.maGiaoVien == ma.FirstOrDefault().maGiaoVien)
+
+                if (kiemtra.maGiaoVien == ma.FirstOrDefault().maGiaoVien)
                 {
                     var qr = from monhoc in db.MonHocs
-                            // join lop in db.Lops on monhoc.GiaoVien.maKhoa equals lop.maKhoa
                              select new ChiTietPhanCongMonHoc
                              {
                                  maMonHoc = monhoc.maMonHoc,
@@ -54,8 +45,13 @@ namespace Test.GiaoVienController
                              };
                     return Ok(qr.ToList());
                 }
+                return BadRequest("Giao Vien Chua Duoc Phan Cong Mon");
             }
-            return BadRequest("Giao Vien Chua Duoc Phan Cong Mon");
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
     }
 

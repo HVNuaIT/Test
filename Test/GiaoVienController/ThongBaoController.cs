@@ -17,7 +17,14 @@ namespace Test.GiaoVienController
         [HttpGet("DanhSachThongBao")]
         public IActionResult getAll(int page=1)
         {
-            return Ok(thongBao.ThongBaoList(page));
+            try
+            {
+                return Ok(thongBao.ThongBaoList(page));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("XoaTheoMa")]
         public IActionResult delete(int id)
@@ -49,7 +56,6 @@ namespace Test.GiaoVienController
         {
             try
             {
-              
                 return Ok(thongBao.themThongBaoChoLop(x));
             }
             catch (Exception ex)

@@ -21,15 +21,9 @@ namespace Test.HocSinhController
         [Authorize(Roles ="HocSinh")]
         public IActionResult ThongTin()
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-            if (check == null)
+            try
             {
-                return BadRequest();
-            }
-            else
-            {
-              
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
                 var kiemtra = db.HocSinhs.SingleOrDefault(x => x.maTK == check.Id);
                 var gt = "";
                 if (kiemtra.user.gioTinh == true)
@@ -40,30 +34,31 @@ namespace Test.HocSinhController
                 {
                     gt = "Nữ";
                 }
-
-                if (kiemtra !=null)
+                if (kiemtra != null)
                 {
                     var qr = (from User in db.Users
-                             join HocSinh in db.HocSinhs on User.Id equals HocSinh.maTK
-                             select new ChiTietThongTinhHS
-                             {
-                                 tenHienThi =User.Name,
-                                 diaChi =User.DiaChi,
-                                 maHocSinh =HocSinh.maHocSinh,
-                                 Email=User.Email,
-                                 hinhAnh=User.hinhAnh,
-                                 Khoa=HocSinh.Khoa.tenKhoa,
-                                 maLop = HocSinh.maLop,
-                                 SDT = User.SDT,
-                                 gioTinh = gt,
- 
-                             }).Where(x=>x.Email==check.Email);
+                              join HocSinh in db.HocSinhs on User.Id equals HocSinh.maTK
+                              select new ChiTietThongTinhHS
+                              {
+                                  tenHienThi = User.Name,
+                                  diaChi = User.DiaChi,
+                                  maHocSinh = HocSinh.maHocSinh,
+                                  Email = User.Email,
+                                  hinhAnh = User.hinhAnh,
+                                  Khoa = HocSinh.Khoa.tenKhoa,
+                                  maLop = HocSinh.maLop,
+                                  SDT = User.SDT,
+                                  gioTinh = gt,
+
+                              }).Where(x => x.Email == check.Email);
                     return Ok(qr);
                 }
+                return BadRequest();
             }
-            return BadRequest();
-
-
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

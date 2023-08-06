@@ -28,68 +28,82 @@ namespace Test.HocSinhController
         [Authorize(Roles = "HocSinh")]
         public IActionResult DanhSachPhanCongMonHoc(int page=1)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-         
+            try
+            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
                 var ma = db.MonHocs.FirstOrDefault();
                 var kiemtra = db.HocSinhs.SingleOrDefault(x => x.maTK == check.Id);
                 if (kiemtra.maLop == ma.maLop)
                 {
                     var qr = (from monhoc in db.MonHocs
-                                 join GiaoVien in db.GiaoViens on monhoc.maGiaoVien equals GiaoVien.maGiaoVien
-                             select new DanhSachMonHoc_HS
-                             {
-                                 maMon = monhoc.maMonHoc,
-                                 tenMon = monhoc.tenMonHoc,
-                                 tengiaoVien = monhoc.GiaoVien.user.Name,
-                                 //tenBaiGiang = BaiGiang.tenBaiGiang
-                                 
-                             }).Skip((page-1)*size).Take(size);
+                              join GiaoVien in db.GiaoViens on monhoc.maGiaoVien equals GiaoVien.maGiaoVien
+                              select new DanhSachMonHoc_HS
+                              {
+                                  maMon = monhoc.maMonHoc,
+                                  tenMon = monhoc.tenMonHoc,
+                                  tengiaoVien = monhoc.GiaoVien.user.Name,
+                              }).Skip((page - 1) * size).Take(size);
                     return Ok(qr.ToList());
                 }
-            
-            return BadRequest("Hoc Sinh Chua Duoc Phan Cong Mon Nao De Hoc");
+                return BadRequest("Hoc Sinh Chua Duoc Phan Cong Mon Nao De Hoc");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("ChiTietMonHocDuocPhanCong_HocSinh")]
         [Authorize(Roles = "HocSinh")]
         public IActionResult ChiTietMonHoc_HS(string maMon,string tenBaiGiang)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+            try
+            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
                 var ma = db.MonHocs.ToList();
                 var kiemtra = db.HocSinhs.SingleOrDefault(x => x.maTK == check.Id);
-                    if (kiemtra.maLop == ma.FirstOrDefault().maLop && ma.FirstOrDefault().maMonHoc == maMon  )
-                    {
-                        var qr =( from ChuDe in db.ChuDes
-                                 join BaiGiang in db.BaiGiangs on ChuDe.Id equals BaiGiang.maChuDe
-                                 join TaiNguyen in db.TaiNguyens on ChuDe.Id equals TaiNguyen.maChuDe
-                                 select new ChiTietBaiGiang_ChuDe_HocSinh
-                                 {
-                                     tieuDe = ChuDe.tieuDe,
-                                     NoiDung = ChuDe.NoiDung,
-                                     tenBaiGiang = BaiGiang.tenBaiGiang,
-                                     NgayUpload = BaiGiang.NgayUpload,
-                                     kichThuc = BaiGiang.kichThuc,
-                                     UpdateByMember = BaiGiang.UpdateByMember,
-                                     maTaiNguyen=TaiNguyen.IdTaiNguyen,
-                                     TaiNguyen = TaiNguyen.tenTaiNguyen,
-                                     
-                                 }).Where(x=>x.tenBaiGiang == tenBaiGiang).ToList();
-                        return Ok(qr.ToList());
-                    }
-            return BadRequest("Học Sinh Không Có Môn Học Nào");
+                if (kiemtra.maLop == ma.FirstOrDefault().maLop && ma.FirstOrDefault().maMonHoc == maMon)
+                {
+                    var qr = (from ChuDe in db.ChuDes
+                              join BaiGiang in db.BaiGiangs on ChuDe.Id equals BaiGiang.maChuDe
+                              join TaiNguyen in db.TaiNguyens on ChuDe.Id equals TaiNguyen.maChuDe
+                              select new ChiTietBaiGiang_ChuDe_HocSinh
+                              {
+                                  tieuDe = ChuDe.tieuDe,
+                                  NoiDung = ChuDe.NoiDung,
+                                  tenBaiGiang = BaiGiang.tenBaiGiang,
+                                  NgayUpload = BaiGiang.NgayUpload,
+                                  kichThuc = BaiGiang.kichThuc,
+                                  UpdateByMember = BaiGiang.UpdateByMember,
+                                  maTaiNguyen = TaiNguyen.IdTaiNguyen,
+                                  TaiNguyen = TaiNguyen.tenTaiNguyen,
+
+                              }).Where(x => x.tenBaiGiang == tenBaiGiang).ToList();
+                    return Ok(qr.ToList());
+                }
+                return BadRequest("Học Sinh Không Có Môn Học Nào");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }  
         }
         [HttpGet("DownTheoID")]
         [Authorize]
         public async Task<IActionResult> DownloadFile(int id)
         {
-            var stream = await tn.DownloadFile(id);
-            if (stream == null)
+            try
             {
-                return NoContent();
+                var stream = await tn.DownloadFile(id);
+                if (stream == null)
+                {
+                    return NoContent();
+                }
+                return new FileContentResult(stream, "application/octet-stream");
             }
-
-            return new FileContentResult(stream, "application/octet-stream");
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-
     }
 }

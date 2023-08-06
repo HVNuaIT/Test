@@ -24,35 +24,43 @@ namespace Test.GiaoVienController
         [Authorize(Roles ="GiaoVien,HocSinh")]
         public IActionResult TraLoi(string noiDung,int maCauHoi)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-            if (check == null)
+            try
             {
-                return BadRequest();
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+                return Ok(traLoi.TraLoiCauHoi(check.Name, noiDung, maCauHoi));
             }
-            else
+            catch (Exception ex)
             {
-                    return Ok(traLoi.TraLoiCauHoi(check.Name,noiDung,maCauHoi));
+                return NoContent();
             }
-            return BadRequest();
-    
-
         }
         [HttpDelete("XoaTraLoi")]
         [Authorize(Roles = "GiaoVien,HocSinh")]
         public IActionResult DeLete(int id)
         {
-            traLoi.Delete(id);
-            return Ok("Da Xoa Thanh Cong");
-
+            try
+            {
+                traLoi.Delete(id);
+                return Ok("Da Xoa Thanh Cong");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("CapNhatLai")]
         [Authorize(Roles = "GiaoVien,HocSinh")]
         public IActionResult Update(int id ,TraLoiDTO x)
         {
-            traLoi.Update(id, x);
-            return Ok("Da Cap Nhat Thanh Cong");
-
+            try
+            {
+                traLoi.Update(id, x);
+                return Ok("Da Cap Nhat Thanh Cong");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

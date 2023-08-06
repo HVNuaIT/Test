@@ -17,22 +17,45 @@ namespace Test.AdminF
         [Authorize(Roles ="Admin")]
         public IActionResult Gell(int page = 1)
         {
-            return Ok(tb.Getall(page));
+            try
+            {
+                return Ok(tb.Getall(page));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
 
         }
         [HttpDelete("XoaThongBao")]
         [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
-            tb.delete(id);
-            return Ok("Xoa Thanh Cong");
+            try
+            {
+                tb.delete(id);
+                return Ok("Xoa Thanh Cong");
+            }
+           catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("XoaTatCaThongBao")]
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteAll()
         {
-            tb.DeleteAll();
-            return Ok("Xoa Thanh Cong");
+            try
+            {
+                tb.DeleteAll();
+                return Ok("Xoa Thanh Cong");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
     }
 }

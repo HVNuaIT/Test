@@ -23,7 +23,7 @@ namespace Test.Response
             try
             {
               var cauHoi = new CauHoi();
-                cauHoi.tieuDe = tieuDe;
+                cauHoi.TenBai = tieuDe;
                 cauHoi.noiDungCauHoi=noiDung;
                 cauHoi.NguoiBinhLuan = nguoiDatCauHoi;
                 cauHoi.ngay = DateTime.Now;
@@ -38,7 +38,7 @@ namespace Test.Response
                 return new CauHoiDTO
                 {
                     nguoiBinhLuan = cauHoi.NguoiBinhLuan,
-                    tieuDe = cauHoi.tieuDe,
+                    TenBai = cauHoi.TenBai,
                     noiDungCauHoi = cauHoi.noiDungCauHoi,
                     thich =cauHoi.thich,
                    ngay = cauHoi.ngay,
@@ -53,44 +53,24 @@ namespace Test.Response
            
         }
 
-        public List<ListHoiDap>  GetAll( int page = 1)
+        public List<ListHoiDap> GetAll(int page = 1)
         {
-            var qr = (from a in db.CauHois
-                      join b in db.TraLois on a.maCauHoi equals b.maCauHoi
-                      select new ListHoiDap
-                      {
-                          tenNguoiHoi = a.NguoiBinhLuan,
-                          tieuDe = a.tieuDe,
-                          noiDungCauHoi = a.noiDungCauHoi,
-                          ngayHoi = a.ngay,
-                          tenNguoiTL = b.tenNguoiTraLoi,
-                          NoiDungTL = b.NoiDung,
-                          ngayTl = b.ngay,
-
-                      }).Skip((page - 1) * pagesize).Take(pagesize).ToList() ;
 
 
-            if (qr.Count == 0)
+            var check = db.CauHois.AsQueryable();
+
+            check = check.Skip((page - 1) * pagesize).Take(pagesize);
+            var kq = check.Select(x => new ListHoiDap
             {
-                var cauHoi = db.CauHois.FirstOrDefault();
-                // var tl = db.TraLois.SingleOrDefault();
-                var kq = new ListHoiDap();
-                kq.tenNguoiHoi = cauHoi.NguoiBinhLuan;
-                kq.tieuDe = cauHoi.tieuDe;
-                kq.noiDungCauHoi = cauHoi.noiDungCauHoi;
-                kq.ngayHoi = cauHoi.ngay;
-                kq.ngayTl = cauHoi.ngay;
-                kq.tenNguoiTL = "";
-                kq.NoiDungTL = "";
-                var ds = new List<ListHoiDap>();
-                ds.Add(kq);
-                return ds.ToList();
+                tieuDe = x.TenBai,
+                noiDungCauHoi = x.noiDungCauHoi,
+                ngayHoi = x.ngay,
+                tenNguoiHoi = x.NguoiBinhLuan,
+                traLois = db.TraLois.Where(a=>a.maCauHoi == x.maCauHoi).ToList(),
+            }).ToList();
 
-            }
-            else
-            {
-              return  qr.ToList() ;
-            }
+            return kq.ToList();
+
 
         }
 
@@ -116,7 +96,7 @@ namespace Test.Response
             {
                 check.ngay= DateTime.Now;
                 check.noiDungCauHoi = x.noiDungCauHoi;
-                check.tieuDe = x.tieuDe;
+                check.TenBai = x.TenBai;
                 db.Entry(check).State=Microsoft.EntityFrameworkCore.EntityState.Modified; db.SaveChanges();
              
             }
@@ -148,5 +128,34 @@ namespace Test.Response
                 db.SaveChanges() ;
             }
         }
+        public List<ListHoiDap> GetAllHoiDap(string name, int page = 1)
+        {
+            var check = db.CauHois.AsQueryable();
+            check = check.Skip((page-1)*pagesize).Take(pagesize);
+            var gv = db.GiaoViens.Where(x => x.user.Name == name).SingleOrDefault();
+            if(gv != null)
+            {
+              var kt=   check.SingleOrDefault(x => x.NguoiBinhLuan == gv.user.Name);
+                if(kt!= null)
+                {
+                    var kq = check.Select(x => new ListHoiDap
+                    {
+                        tieuDe = x.TenBai,
+                        noiDungCauHoi = x.noiDungCauHoi,
+                        ngayHoi = x.ngay,
+                        tenNguoiHoi = x.NguoiBinhLuan,
+
+                        traLois = db.TraLois.Where(b => b.maCauHoi == x.maCauHoi).ToList(),
+
+                    }).ToList();
+
+
+                    return kq.ToList();
+                }
+            }
+            return null ;
+            
+          
+        }
+        }
     }
-}

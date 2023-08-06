@@ -17,7 +17,7 @@ namespace Test.AdminF
             this.role = role;
         }
         [HttpPost("ThemQuyen")]
-        [Authorize(Roles ="Admin")]
+        //[Authorize(Roles ="Admin")]
         public IActionResult Add(RoleDTO roled)
         {
             try

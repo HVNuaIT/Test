@@ -56,5 +56,19 @@ namespace Test.AdminF
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("DanhSachLop")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetAll(int page= 1)
+        {
+            try
+            {
+               
+                return Ok(lop.Getall(page));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

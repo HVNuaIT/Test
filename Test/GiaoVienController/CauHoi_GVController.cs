@@ -21,128 +21,111 @@ namespace Test.GiaoVienController
             this.db = db;
         }
         [HttpPost("DatCauHoiMonHoc")]
-        [Authorize(Roles ="GiaoVien,HocSinh")]
+        [Authorize(Roles ="GiaoVien")]
         public IActionResult DatDauHoi (string tieuDe, string noiDung, string mon)
         {
-            var ten = "";
-            var like = false;
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+            try
+            {
+                var ten = "";
+                var like = false;
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
 
                 var checkM = db.MonHocs.FirstOrDefault();
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
                 if (checkM.maGiaoVien == kiemtra.maGiaoVien)
                 {
                     ten = check.Name;
-                    return Ok(cauHoi.DatCauHoi(tieuDe, ten, like, noiDung,mon));
+                    return Ok(cauHoi.DatCauHoi(tieuDe, ten, like, noiDung, mon));
                 }
-            return BadRequest();
-
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
-        [HttpGet("DanhSachCauHoi&Dap")]
+       
+        [HttpGet("DanhSachAllCauHoi&Dap")]
         [Authorize(Roles = "GiaoVien")]
-        public IActionResult GetALLCauHoi(int page=1)
+        public IActionResult GetALL(int page = 1)
         {
-           
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+            try
+            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
 
-            if (check == null)
+                return Ok(cauHoi.GetAllHoiDap(check.Name, page));
+            }catch (Exception ex)
             {
                 return BadRequest();
             }
-            else
-            {
-                var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
-
-                if (kiemtra != null)
-                {
-                   
-                    return Ok(cauHoi.GetAll(page));
-                }
-            }
-            return BadRequest();
+           
         }
         [HttpPut("CapNhatCauHoi&Dap")]
         [Authorize(Roles = "GiaoVien")]
         public IActionResult Update(int id,CauHoiDTO x)
         {
-
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-            if (check == null)
+            try
             {
-                return BadRequest();
-            }
-            else
-            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
-
                 if (kiemtra != null)
                 {
                     cauHoi.Update(x, id);
                     return Ok("Cap Nhat Thanh Cong Cau Hoi");
                 }
+                return BadRequest();
             }
-            return BadRequest();
-
-
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpDelete("XoaCauHoi&Dap")]
         [Authorize(Roles = "GiaoVien")]
         public IActionResult Delete(int id)
         {
-
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-            if (check == null)
+            try
             {
-                return BadRequest();
-            }
-            else
-            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
-
                 if (kiemtra != null)
                 {
                     cauHoi.Delete(id);
                     return Ok("Xoa Thanh Cong Cau Hoi");
                 }
+                return BadRequest();
             }
-            return BadRequest();
-
-
+            catch(Exception ex)
+            {
+                return NotFound();
+            }
         }
         [HttpPut("ThichCauHoi&Dap")]
         [Authorize(Roles = "GiaoVien")]
         public IActionResult Like(int id ,bool like)
         {
-
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-
-            if (check == null)
+            try
             {
-                return BadRequest();
-            }
-            else
-            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
-
                 if (kiemtra != null)
                 {
-                    cauHoi.Like(id,like);
-                    if(like==true)
+                    cauHoi.Like(id, like);
+                    if (like == true)
                     {
                         return Ok(" Da thich Thanh Cong Cau Hoi");
-
-                    } else
+                    }
+                    else
                     {
                         return Ok(" Bo Thich Thanh Cong Cau Hoi");
                     }
-                   
                 }
+                return BadRequest();
             }
-            return BadRequest();
-
-
+            catch(Exception ex)
+            {
+                return NoContent();
+            }
         }
 
     }

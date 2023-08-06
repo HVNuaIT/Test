@@ -24,12 +24,7 @@ namespace Test.AdminF
         {
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
 
-            if (check == null)
-            {
-                return BadRequest();
-            }
-            else
-            {
+           
                 var kiemtra = db.Admins.SingleOrDefault(x => x.maTK == check.Id);
                 var gt = "";
                 if(kiemtra.user.gioTinh == true)
@@ -57,7 +52,7 @@ namespace Test.AdminF
                               }).Where(x => x.Email == check.Email);
                     return Ok(qr);
                 }
-            }
+          
             return BadRequest();
 
 

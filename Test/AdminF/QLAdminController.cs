@@ -28,7 +28,7 @@ namespace Test.AdminF
             mapper = _mapper;
         }
         [HttpPost("TaoTaiKhoanChoNguoiDung")]
-        [Authorize(Roles = "Admin")]
+       // [Authorize(Roles = "Admin")]
         public IActionResult Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh, int vaitro)
         {
                 if (ModelState.IsValid)

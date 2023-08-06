@@ -32,40 +32,59 @@ namespace Test.GiaoVienController
       
         public IActionResult getALL(int page=1)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-                return Ok(dt.getAll(check.Name,page));
+            try
+            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+                return Ok(dt.getAll(check.Name, page));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("XemChiTiet")]
         [Authorize(Roles = "GiaoVien,Admin")]
         public async Task<IActionResult> XemChiTiet(int id)
         {
-            var dethi = dt.XemChiTietDeThi(id);
-            string Filename = dethi.TenBaiThi + ".pdf";
-            return File(dethi.Content.ToArray(), "application/pdf", Filename);
+            try
+            {
+                var dethi = dt.XemChiTietDeThi(id);
+                string Filename = dethi.TenBaiThi + ".pdf";
+                return File(dethi.Content.ToArray(), "application/pdf", Filename);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Loi");
+            }
         }
         [HttpPost("ThemDeThiTuLuan")]
         [Authorize(Roles = "GiaoVien")]
         public async Task<IActionResult> DethiTuLuan(string TenBaiThi,string mon,string hinhThuc, [FromBody] List<TuLuan> s ,string gio , string phut)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            if (check == null)
+            try
+            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+                return Ok(dt.themDeThiTuLuan(TenBaiThi, mon, hinhThuc, s, gio, phut));
+            }
+            catch(Exception ex)
             {
                 return BadRequest();
             }
-          
-            return Ok(dt.themDeThiTuLuan(TenBaiThi,mon,hinhThuc,s,gio,phut));
-
-        }
-      
+        } 
         [HttpPost("ThemDeThiTracNghiem")]
         [Authorize(Roles = "GiaoVien")]
         public async Task<IActionResult> DethiNghiem(string TenBaiThi, string mon, string hinhThuc, [FromBody] List<CauHoiTracNghiem> s, string gio, string phut)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            return Ok(dt.themDeThiTracNghiem(TenBaiThi, mon, hinhThuc, s, gio, phut));
+            try
+            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+                return Ok(dt.themDeThiTracNghiem(TenBaiThi, mon, hinhThuc, s, gio, phut));
+            }
+            catch(Exception x)
+            {
+                return BadRequest(x.Message);
+            }
+           
         }
-
-
-
     }
 }

@@ -8,7 +8,9 @@ namespace Test.Model
     {
         [Key]
         public int maCauHoi { get; set; }
-        public string tieuDe { get; set; }
+       
+        [ForeignKey("TenBai")]
+        public string TenBai { get; set; }
         public string noiDungCauHoi { get;set; }
         public string NguoiBinhLuan { get; set; }
         public DateTime ngay { get; set; }

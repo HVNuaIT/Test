@@ -8,5 +8,6 @@ namespace Test.Sevices
         MonHocDTO Add(MonHocDTO monHocDTO);
         void Delete(string id);
         void Update(MonHocViewModel monHocDTO,string id);
+        List<MonHocDTO> Getall(int page = 1);
     }
 }

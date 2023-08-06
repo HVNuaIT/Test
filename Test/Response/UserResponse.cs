@@ -114,7 +114,7 @@ namespace Test.Response
             var fromEmailPassword = "pketjypguhgbgjkx";
             string subject = "Hệ thống cấp lại mật khẩu cho Email :!" + emailID;
 
-            string body = "<br/><br/>Admin cap lai mat khau cho  Email Nay " +
+            string body = "<br/><br/>Admin đã cấp lại mật khẩu cho Email này  " +
                 " Thành Công.Vui lòng đăng nhập vào hệ thống để đổi lại mật khẩu ngay Lưu ý không để lộ mật khẩu cho người khác Xin Cảm Ơn!! " +
                 " <br/><br/><a href='" + s + "'>" + s + "</a> ";
             var kiemtraEmail = db.Users.SingleOrDefault(x => x.Email == emailID);

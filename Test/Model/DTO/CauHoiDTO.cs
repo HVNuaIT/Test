@@ -4,7 +4,7 @@ namespace Test.Model.DTO
 {
     public class CauHoiDTO
     {
-        public string tieuDe { get; set; }
+        public string TenBai { get; set; }
         public string noiDungCauHoi { get; set; }
         public string nguoiBinhLuan { get; set; }
         public bool thich { get; set; }

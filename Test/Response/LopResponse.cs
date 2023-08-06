@@ -11,6 +11,7 @@ namespace Test.Response
     {
         private readonly Database db;
         private readonly IMapper mapper;
+        public static int pagesize { get; set; } = 5;
         public LopResponse(Database db, IMapper mapper)
         {
             this.db = db;
@@ -53,6 +54,18 @@ namespace Test.Response
                 db.Entry(checkLop).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges() ;
             }
+        }
+
+        public List<LopDTO> Getall(int page = 1)
+        {
+          var check = db.Lops.AsQueryable();
+            check = check.Skip((page-1)*pagesize).Take(pagesize);
+            var kq = check.Select(x => new LopDTO
+            {
+                maLop = x.maLop,
+                tenLop = x.tenLop,
+            }).ToList();
+            return kq.ToList();
         }
     }
 }

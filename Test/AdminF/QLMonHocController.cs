@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Test.Model;
 using Test.Model.DTO;
 using Test.Model.ModelView;
 using Test.Sevices;
@@ -50,6 +51,19 @@ namespace Test.AdminF
             }catch(Exception ex)
             {
                 return BadRequest(ex);
+            }
+        }
+        [HttpGet("DanhSachMonHoc")]
+        [Authorize(Roles = "Admin")]
+        public IActionResult GetAll(int page = 1)
+        {
+            try
+            {
+                return Ok(mon.Getall(page));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
     }

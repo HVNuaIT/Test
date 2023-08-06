@@ -25,31 +25,48 @@ namespace Test.GiaoVienController
         [Authorize(Roles ="GiaoVien")]
         public async Task<IActionResult> Add([FromForm] List<IFormFile> files, string maMonHoc, string tenTaiNguyen, int maChuDe,int maBaiGiang)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            if (check == null)
+            try
             {
-                return BadRequest();
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+                var uploadResponse = await tn.Add(files, maMonHoc, tenTaiNguyen, check.Email, maChuDe, maBaiGiang);
+                if (uploadResponse.ErrorMessage != "")
+                    return BadRequest(new { error = uploadResponse.ErrorMessage });
+                return Ok(uploadResponse);
             }
-            var uploadResponse = await tn.Add(files, maMonHoc, tenTaiNguyen, check.Email, maChuDe,maBaiGiang);
-            if (uploadResponse.ErrorMessage != "")
-                return BadRequest(new { error = uploadResponse.ErrorMessage });
-            return Ok(uploadResponse);
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
         [HttpDelete("XoaTaiNguyen")]
         [Authorize(Roles = "GiaoVien")]
         public  IActionResult Delete(string ten)
         {
-            tn.Delete(ten);
-          
-            return Ok("Da Xoa Thanh Cong tai nguyen" + ten);
+            try
+            {
+                tn.Delete(ten);
+                return Ok("Da Xoa Thanh Cong tai nguyen" + ten);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
         [HttpGet("DanhSachTaiNguyen")]
         [Authorize(Roles = "GiaoVien")]
         public IActionResult GetAll(int page = 1)
         {
-
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            return Ok(tn.GetAll(check.Name, page));
+            try
+            {
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+                return Ok(tn.GetAll(check.Name, page));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
     }
 }

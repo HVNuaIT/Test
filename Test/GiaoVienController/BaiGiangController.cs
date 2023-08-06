@@ -29,10 +29,7 @@ namespace Test.GiaoVienController
         public async Task<IActionResult> UploadFiles([FromForm] List<IFormFile> files,string maMonHoc,string tenBaiGiang,int maChuDe)
         {
             var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            if (check == null)
-            {
-                return BadRequest();
-            }
+          
             var uploadResponse = await baiGiang.UploadFile(files,maMonHoc,tenBaiGiang,check.Email,maChuDe);
             if (uploadResponse.ErrorMessage != "")
                 return BadRequest(new { error = uploadResponse.ErrorMessage });
@@ -54,12 +51,16 @@ namespace Test.GiaoVienController
       
         public async Task<IActionResult> DanhSachBaiGiangGV(int page=1)
         {
-            var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
-            if (check == null)
+            try
             {
-                return BadRequest();
+                var check = db.Users.SingleOrDefault(x => x.Email == HttpContext.User.FindFirstValue(ClaimTypes.Email));
+
+                return Ok(baiGiang.GetALl(check.Name, page));
+            }catch(Exception ex)
+            {
+                return BadRequest(ex);
             }
-                return Ok(baiGiang.GetALl(check.Name,page));
+           
         }
         [HttpDelete("Xoa Bai Giang")]
         [Authorize(Roles = "GiaoVien")]

@@ -93,7 +93,7 @@ namespace Test.Response
             htmlcontent += "<br>";
             foreach (var item in s)
             {
-                htmlcontent += "<h2>Câu :" + item.ThuTuCauHoi + item.NoiDungCauHoi + "</h2>";
+                htmlcontent += "<h2>Câu :" + item.ThuTuCauHoi +""+ item.NoiDungCauHoi + "</h2>";
                 htmlcontent += "<h3> A :" + item.dapAn1 + "</h3>";
                 htmlcontent += "<h3> B :" + item.dapAn2 + "</h3>";
                 htmlcontent += "<h3> C :" + item.dapAn3 + "</h3>";
