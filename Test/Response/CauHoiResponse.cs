@@ -55,10 +55,7 @@ namespace Test.Response
 
         public List<ListHoiDap> GetAll(int page = 1)
         {
-
-
             var check = db.CauHois.AsQueryable();
-
             check = check.Skip((page - 1) * pagesize).Take(pagesize);
             var kq = check.Select(x => new ListHoiDap
             {
@@ -148,8 +145,6 @@ namespace Test.Response
                         traLois = db.TraLois.Where(b => b.maCauHoi == x.maCauHoi).ToList(),
 
                     }).ToList();
-
-
                     return kq.ToList();
                 }
             }

@@ -21,16 +21,10 @@ namespace Test.Model
         public int maQuyen { get; set; }
         [ForeignKey(nameof(maQuyen))]
         public virtual Role Role { get; set; }
-      
+        //public string Token { get; set; } = string.Empty;
+        ////    public string idJwt { get; set; }
+        //public DateTime ThoiGianTao { get; set; } = DateTime.Now;
+        //public DateTime ThoiGianHetHan { get; set; }
 
-    }
-     
-
-      
-        //public string RefreshToken { get; set; } = string.Empty;
-        //public DateTime TokenCreated { get; set; }
-        //public DateTime TokenExpires { get; set; }
-
-
-    
+    }  
 }

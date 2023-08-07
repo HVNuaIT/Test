@@ -393,6 +393,43 @@ namespace Test.Migrations
                     b.ToTable("NganHangCauHoi");
                 });
 
+            modelBuilder.Entity("Test.Model.RefreshToken", b =>
+                {
+                    b.Property<Guid>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ThoiGianHetHan")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ThoiGianTao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("idJwt")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("idUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("idUser");
+
+                    b.ToTable("RefreshToken");
+                });
+
             modelBuilder.Entity("Test.Model.Role", b =>
                 {
                     b.Property<int>("Id")
@@ -693,6 +730,17 @@ namespace Test.Migrations
                     b.Navigation("GiaoVien");
 
                     b.Navigation("Lop");
+                });
+
+            modelBuilder.Entity("Test.Model.RefreshToken", b =>
+                {
+                    b.HasOne("Test.Model.User", "user")
+                        .WithMany()
+                        .HasForeignKey("idUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Test.Model.TraLoi", b =>

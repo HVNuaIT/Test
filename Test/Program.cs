@@ -46,16 +46,17 @@ builder.Services.AddDbContext<Database>(options =>
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(otp =>
 {
-    otp.SaveToken = true;
-    otp.RequireHttpsMetadata = false;
+    //otp.SaveToken = true;
+   
     otp.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = false,
         ValidateAudience = false,
-
+        
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("AppSetting:SecretKey").Value)),
 
+        ClockSkew = TimeSpan.Zero
     };
 });
 
