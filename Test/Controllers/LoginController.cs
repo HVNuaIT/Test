@@ -191,7 +191,7 @@ namespace Test.Controllers
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                    new Claim("Id", user.Id.ToString()),
                 }),
-                Expires = DateTime.UtcNow.AddSeconds(20),
+                Expires = DateTime.UtcNow.AddMinutes(10),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha512Signature)
             };
             var token = jwtHandler.CreateToken(tokenDe);
