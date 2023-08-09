@@ -21,8 +21,8 @@ namespace Test.GiaoVienController
         {
             try
             {
-                gv.Update(File, id);
-                return Ok("Da Cap Nhat Hinh Anh Cua Giao Vien Co Ma La:" + id);
+               
+                return Ok(gv.Update(File, id));
             }
             catch (Exception ex)
             {

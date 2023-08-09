@@ -20,7 +20,7 @@ namespace Test.Response
             this.db = db;
         }
 
-        public void DuyetBai(int id,string trangThai)
+        public string DuyetBai(int id,string trangThai)
         {
                 var check = db.DeThis.SingleOrDefault(x => x.Id.Equals(id));
                 if (check != null)
@@ -33,7 +33,9 @@ namespace Test.Response
                     
                     db.Entry(check).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
+                return "Thanh Cong";
                 }
+            return "Loi";
               
         }
         public List<DeThiViewModel> getAll(string name, int page = 1)

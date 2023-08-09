@@ -6,7 +6,7 @@ namespace Test.Sevices
     public interface ITaiNguyen
     {
         Task<FileUploadResponse> Add(List<IFormFile> File, string maMonHoc, string tenBaiGiang, string gv, int maChuDe, int maBaiGiang);
-        void Delete(string name);
+        string Delete(string name);
         List<TaiNguyenViewModel> GetAll(string name,int page =1);
         Task<byte[]> DownloadFile(int id);
         TaiNguyen DuyetTaiNguyen(bool trangThai, int id, string ghiChu);

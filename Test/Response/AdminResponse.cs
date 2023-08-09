@@ -31,7 +31,7 @@ namespace Test.Response
             }return null;
         }
 
-        public void Delete(string id)
+        public string Delete(string id)
         {
             var checkAdmin= db.Admins.SingleOrDefault(s=>s.IDAdmin.Equals(id));
             var checkTK = db.Users.SingleOrDefault(x => x.Id == checkAdmin.maTK);
@@ -44,12 +44,15 @@ namespace Test.Response
                   
                 }
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "That Bai";
+
         }
 
 
 
-        public void UpdateAdmin(IFormFile file, string id)
+        public string UpdateAdmin(IFormFile file, string id)
         {
             var checkAdmin = db.Admins.SingleOrDefault(x => x.IDAdmin.Equals(id));
             var checkUser = db.Users.SingleOrDefault(a => a.Id.Equals(checkAdmin.maTK));
@@ -61,10 +64,11 @@ namespace Test.Response
                     checkUser.hinhAnh = file.FileName;
                     db.Entry(checkUser).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
-
+                   
                 }
-
+                return "Thanh Cong";
             }
+            return "That Bai";
         }
     }
 }

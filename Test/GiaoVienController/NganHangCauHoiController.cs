@@ -58,8 +58,8 @@ namespace Test.GiaoVienController
         {
             try
             {
-                nh.delete(id);
-                return Ok("Da xoa thanh cong");
+                
+                return Ok(nh.delete(id));
             }
             catch(Exception ex)
             {
@@ -72,8 +72,8 @@ namespace Test.GiaoVienController
         {
             try
             {
-                nh.Update(id, s);
-                return Ok("Cap nhat thanh cong");
+              
+                return Ok(nh.Update(id, s));
             }
             catch (Exception ex)
             {

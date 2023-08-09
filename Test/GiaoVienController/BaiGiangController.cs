@@ -68,8 +68,7 @@ namespace Test.GiaoVienController
         {
             try
             {
-                baiGiang.Delete(ten);
-                return Ok("Da Xoa Bai Giang");
+                return Ok(baiGiang.Delete(ten));
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);

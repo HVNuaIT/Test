@@ -30,14 +30,16 @@ namespace Test.Response
             return dto;
         }
 
-        public void Delete(string id)
+        public string Delete(string id)
         {
           var check = db.Khoas.SingleOrDefault(x=>x.maKhoa==id);
             if(check!=null)
             {
                 db.Khoas.Remove(check);
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
         public List<KhoaDTO> GetAll(int page = 1)
@@ -52,7 +54,7 @@ namespace Test.Response
             return kqtv.ToList();
         }
 
-        public void update( string id,string tenKhoa)
+        public string update( string id,string tenKhoa)
         {
             
            var check = db.Khoas.SingleOrDefault(x=>x.maKhoa == id);
@@ -60,8 +62,9 @@ namespace Test.Response
             {
                 check.tenKhoa = tenKhoa;
                 db.Entry(check).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
-                db.SaveChanges() ;
+                db.SaveChanges() ;return "Thanh Cong";
             }
+            return "Loi";
         }
     }
 }

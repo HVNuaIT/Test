@@ -34,8 +34,8 @@ namespace Test.GiaoVienController
 
             try
             {
-                chuDe.Update(x,id);
-                return Ok("Cap Nhat Thanh Cong Chu De");
+               
+                return Ok(chuDe.Update(x, id)) ;
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -46,8 +46,8 @@ namespace Test.GiaoVienController
         public IActionResult Delete(int id)
         {
             try
-            { chuDe.Delete(id);
-                return Ok("Xoa Thanh Cong Chu De");
+            { 
+                return Ok(chuDe.Delete(id));
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);

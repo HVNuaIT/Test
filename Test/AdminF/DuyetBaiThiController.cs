@@ -18,8 +18,8 @@ namespace Test.AdminF
         [HttpPut]
         public IActionResult DuyetBaiThi(string trangThai, int id)
         {
-            dt.DuyetBai(id, trangThai);
-            return Ok("Da duyet bai thanh cong");
+            
+            return Ok(dt.DuyetBai(id, trangThai));
         }
         [Authorize(Roles = "Admin")]
         [HttpGet("DanhSachDeThi")]

@@ -34,8 +34,8 @@ namespace Test.AdminF
         {
             try
             {
-                tb.delete(id);
-                return Ok("Xoa Thanh Cong");
+                
+                return Ok(tb.delete(id));
             }
            catch (Exception ex)
             {
@@ -48,8 +48,8 @@ namespace Test.AdminF
         {
             try
             {
-                tb.DeleteAll();
-                return Ok("Xoa Thanh Cong");
+               
+                return Ok(tb.DeleteAll());
             }
             catch (Exception ex)
             {

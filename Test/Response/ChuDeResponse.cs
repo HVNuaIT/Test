@@ -23,14 +23,16 @@ namespace Test.Response
                 db.SaveChanges();
                 return x;              
         }
-        public void Delete(int id)
+        public string Delete(int id)
         {
             var checkChuDe= db.ChuDes.FirstOrDefault(x=>x.Id== id);
             if(checkChuDe!=null)
             {
                 db.ChuDes.Remove(checkChuDe);
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return " LOi";
         }
 
         public List<ChuDeViewModel> GetAll(string maMon)
@@ -51,7 +53,7 @@ namespace Test.Response
             return null ;
         }
 
-        public void Update(ChuDeDTO x ,int id)
+        public string Update(ChuDeDTO x ,int id)
         {
             var checkChuDe=db.ChuDes.FirstOrDefault(x=>x.Id==id);
             if(checkChuDe!=null)
@@ -61,7 +63,9 @@ namespace Test.Response
                 checkChuDe.maMonHoc=x.maMonHoc;
                 db.Entry(checkChuDe).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
        

@@ -40,8 +40,8 @@ namespace Test.AdminF
 
             try
             {
-                hs.Delete(ID);
-                return Ok("Da Xoa Thanh Cong Tai Khoan Co ID La :" + ID);
+               
+                return Ok(hs.Delete(ID));
             }
             catch (Exception ex)
             {

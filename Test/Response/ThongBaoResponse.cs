@@ -17,14 +17,16 @@ namespace Test.Response
             this.db = db;
             this.mapper = mapper;
         }
-        public void Delete(int id)
+        public string Delete(int id)
         {
            var check = db.ThongBaos.FirstOrDefault(x=>x.maThongBao==id);
             if (check != null)
             { 
                 db.ThongBaos.Remove(check); 
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
         public List<ThongBaoViewModel> ThongBaoList(int page =1)
         {
@@ -36,21 +38,27 @@ namespace Test.Response
             }).ToList();
             return kq.ToList();
         }
-        public void DeleteAll()
+        public string DeleteAll()
         {
            var check = db.ThongBaos.ToList();
-         foreach(var x in check)
+            if (check.Count > 0)
             {
-                db.ThongBaos.Remove(x);
+
+
+                foreach (var x in check)
+                {
+                    db.ThongBaos.Remove(x);
+                }
+                db.SaveChanges();
+                return "Thanh Cong";
             }
-            db.SaveChanges();
+            return "Loi";
         }
 
         public ThongBao_LopViewModel themThongBaoChoLop(ThongBao_LopViewModel thongBaoDTO)
         {
             var mapp = mapper.Map<ThongBao>(thongBaoDTO);
             var list = db.HocSinhs.ToList();
-            
             db.ThongBaos.Add(mapp);
             db.SaveChanges();
             return thongBaoDTO;

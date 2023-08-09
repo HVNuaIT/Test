@@ -23,25 +23,34 @@ namespace Test.Response
             return kq.ToList();
         }
 
-        public void delete(int id)
+        public string delete(int id)
         {
             var check = db.ThongBaoAdmins.SingleOrDefault(x => x.maTBaoAdmin == id);
             if (check != null)
             {
                 db.ThongBaoAdmins.Remove(check);
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
-        public void DeleteAll()
+        public string DeleteAll()
         {
             List<ThongBaoAdmin> ds = new List<ThongBaoAdmin>();
-            foreach(var id  in db.ThongBaoAdmins)
+            if (ds.Count > 0)
             {
-                db.ThongBaoAdmins.Remove(id);
-                db.SaveChanges() ;
-            }
-      
+
+
+                foreach (var id in db.ThongBaoAdmins)
+                {
+                    db.ThongBaoAdmins.Remove(id);
+                    db.SaveChanges();
+
+                }
+                return "Thanh Cong";
+            }return "Loi";
+
         }
     }
 }

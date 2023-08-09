@@ -5,7 +5,7 @@ namespace Test.Sevices
     public interface IThongBaoAdmin
     {
        List<ThongBaoAdminDTO>Getall(int page =1);
-        void delete(int id);
-        void DeleteAll();
+        string delete(int id);
+        string DeleteAll();
     }
 }

@@ -80,8 +80,8 @@ namespace Test.AdminF
         {
             try
             {
-                admin.UpdateAdmin(file, id);
-                return Ok("Da Cap Nhat Anh Dai Dien Cua Tai Khoan Admin Voi ID La :" + id);
+               
+                return Ok(admin.UpdateAdmin(file, id));
             }
             catch (Exception ex)
             {
@@ -96,8 +96,8 @@ namespace Test.AdminF
         {
             try
             {
-                admin.Delete(id);
-                return Ok("Da Xoa Thanh Cong Tai Khoan Admin Co ID La  :" + id);
+            
+                return Ok(admin.Delete(id));
             }
             catch (Exception ex)
             {

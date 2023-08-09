@@ -45,8 +45,7 @@ namespace Test.GiaoVienController
         {
             try
             {
-                tn.Delete(ten);
-                return Ok("Da Xoa Thanh Cong tai nguyen" + ten);
+                return Ok(tn.Delete(ten));
             }
             catch(Exception ex)
             {

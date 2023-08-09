@@ -121,14 +121,16 @@ namespace Test.Response
             }
         }
 
-        public void Delete(string name)
+        public string Delete(string name)
         {
            var check = db.TaiNguyens.SingleOrDefault(x=>x.tenTaiNguyen==name);
             if (check != null)
             {
                 db.TaiNguyens.Remove(check);
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
         public async Task<byte[]> DownloadFile(int id)

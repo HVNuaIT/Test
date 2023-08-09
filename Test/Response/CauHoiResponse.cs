@@ -71,7 +71,7 @@ namespace Test.Response
 
         }
 
-        public void Delete(int id)
+        public string Delete(int id)
         {
             var check = db.CauHois.SingleOrDefault(x => x.maCauHoi == id);
             if (check != null)
@@ -83,10 +83,12 @@ namespace Test.Response
                 db.ThongBaos.Add(thongBao);
                 db.CauHois.Remove(check);
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
-        public void Update(CauHoiDTO x, int id)
+        public string Update(CauHoiDTO x, int id)
         {
           var check = db.CauHois.SingleOrDefault(x=>x.maCauHoi == id);
             if(check != null)
@@ -95,11 +97,12 @@ namespace Test.Response
                 check.noiDungCauHoi = x.noiDungCauHoi;
                 check.TenBai = x.TenBai;
                 db.Entry(check).State=Microsoft.EntityFrameworkCore.EntityState.Modified; db.SaveChanges();
-             
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
-        public void Like(int id, bool Like)
+        public string Like(int id, bool Like)
         {
             var check = db.CauHois.SingleOrDefault(x => x.maCauHoi == id);
             if (check != null)
@@ -111,19 +114,21 @@ namespace Test.Response
                    
                     ThongBao.tieuDeThongBao = check.NguoiBinhLuan + "Da thich Binh Cau Hoi";
                     ThongBao.TenNguoiThongBao = check.NguoiBinhLuan;
-                   
+                  
                 }
                 else
                 {
                     
                     ThongBao.tieuDeThongBao = check.NguoiBinhLuan + "Da Bo thich Binh Cau Hoi";
                     ThongBao.TenNguoiThongBao = check.NguoiBinhLuan;
-                   
+                 
                 }
                 db.ThongBaos.Add(ThongBao);    
                 db.Entry(check).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges() ;
+                return "Thanh Cong";
             }
+            return "Loi";
         }
         public List<ListHoiDap> GetAllHoiDap(string name, int page = 1)
         {

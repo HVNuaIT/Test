@@ -188,7 +188,7 @@ namespace Test.Response
             }).Where(x=>x.nguoiSoHuu == ten).ToList();
             return kqtv.ToList();
         }
-        public void Delete(string tenBaiGiang)
+        public string Delete(string tenBaiGiang)
         {
            var checkBG = db.BaiGiangs.SingleOrDefault(x=>x.tenBaiGiang.Equals(tenBaiGiang));
             if (checkBG != null )
@@ -200,7 +200,9 @@ namespace Test.Response
                 db.BaiGiangs.Remove(checkBG);
                 db.ThongBaos.Add(thongBao);
                 db.SaveChanges();
+                return "Xoa Thanh Cong";
             }
+            return "Loi";
         }
 
         public List<BaiGiangViewModel> GetALlAdmin(int page = 1)

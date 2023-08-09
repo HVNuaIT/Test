@@ -26,7 +26,7 @@ namespace Test.Response
             }return null;
 
         }
-        public void Delete(string id)
+        public string Delete(string id)
         {
             var checkhs = db.HocSinhs.SingleOrDefault(x => x.maHocSinh.Equals(id));
             var checkuser = db.Users.SingleOrDefault(x => x.Id == checkhs.maTK);
@@ -38,9 +38,11 @@ namespace Test.Response
                     db.Users.Remove(checkuser);
                 }
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
-        public void Update(IFormFile HinhAnh, string id)
+        public string Update(IFormFile HinhAnh, string id)
         {
            var checkhs = db.HocSinhs.SingleOrDefault(x=> x.maHocSinh.Equals(id));
             var checkuser = db.Users.SingleOrDefault(a => a.Id == checkhs.maTK);
@@ -50,9 +52,11 @@ namespace Test.Response
                     checkuser.hinhAnh = HinhAnh.FileName;
                     db.Entry(checkuser).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                     db.SaveChanges();
+                    return "Thanh Cong";
                 }
                
             }
+            return "Loi";
         }
     }
 }

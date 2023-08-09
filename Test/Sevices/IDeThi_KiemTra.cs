@@ -12,7 +12,7 @@ namespace Test.Sevices
         DeThi themDeThiTracNghiem(string tenBaiThi, string Mon, string hinhThuc, List<CauHoiTracNghiem> s, string gio, string phut);
         List<DeThiViewModel> getAll(string name,int page=1);
         DeThi XemChiTietDeThi(int id);
-        void DuyetBai(int id,string trangThai);
+        string DuyetBai(int id,string trangThai);
         List<DeThiViewModel> getAllDTAdmin( int page = 1);
         
     }

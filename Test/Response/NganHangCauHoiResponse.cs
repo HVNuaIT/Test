@@ -20,7 +20,7 @@ namespace Test.Response
         }
        
 
-        public void delete(string id)
+        public string delete(string id)
         {
             
             var check = db.NganHangCauHois.SingleOrDefault(x=>x.Id==id);
@@ -30,7 +30,9 @@ namespace Test.Response
                 db.NganHangCauHois.Remove(check);
                 db.CauHoiTN.Remove(checkch);
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
         public List<DSNganHangCauHoiViewModel> GetALL(string name, int page = 1)
@@ -52,7 +54,7 @@ namespace Test.Response
             return kq.ToList();
         }
 
-        public void Update(int id, CauHoiTNViewModel s)
+        public string Update(int id, CauHoiTNViewModel s)
         {
            
             var ds = db.CauHoiTN.SingleOrDefault(x => x.maCauHoiTN == id);
@@ -65,8 +67,9 @@ namespace Test.Response
 
                 db.Entry(ds).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
-
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
         public NganHangCauHoiTN Add(string id, string mon, string doKho, string name, List<CauHoiTN> S)

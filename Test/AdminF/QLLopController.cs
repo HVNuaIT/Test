@@ -34,8 +34,8 @@ namespace Test.AdminF
         {
             try
             {
-                lop.Update(id, x);
-                return Ok("Cap Nhat Thanh Cong Lop Co Id: " + id);
+              
+                return Ok(lop.Update(id, x));
             }
             catch (Exception ex)
             {
@@ -48,8 +48,8 @@ namespace Test.AdminF
         {
             try
             {
-                lop.Delete(id);
-                return Ok("Xoa Thanh Cong Lop Co Id: " + id);
+              
+                return Ok(lop.Delete(id));
             }
             catch (Exception ex)
             {

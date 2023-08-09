@@ -34,8 +34,8 @@ namespace Test.AdminF
         public IActionResult Update(MonHocViewModel x,string id)
         {
             try
-            { mon.Update(x,id);
-                return Ok("Da Cap Nhat Lai Mon Hoc Co ID La :" + id);
+            { 
+                return Ok(mon.Update(x, id));
             }catch (Exception ex)
             {
                 return BadRequest(ex);
@@ -46,8 +46,8 @@ namespace Test.AdminF
         public IActionResult Delete(string id)
         {
             try
-            {    mon.Delete(id);
-                return Ok("Da Xoa Mon Hoc Co ID La : " + id);
+            {   
+                return Ok(mon.Delete(id));
             }catch(Exception ex)
             {
                 return BadRequest(ex);

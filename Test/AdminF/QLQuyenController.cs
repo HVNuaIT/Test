@@ -47,8 +47,8 @@ namespace Test.AdminF
         {
             try
             {
-                role.Update(id, roled);
-                return Ok("Update Thanh Cong Quyen");
+                
+                return Ok(role.Update(id, roled));
             }
             catch (Exception ex)
             {
@@ -61,8 +61,8 @@ namespace Test.AdminF
         {
             try
             {
-                role.Remove(id);
-                return Ok("Da Xoa Thanh Cong");
+              
+                return Ok(role.Remove(id));
             }
             catch (Exception ex)
             {

@@ -46,8 +46,8 @@ namespace Test.AdminF
         {
             try
             {
-                khoa.update(id, TenKhoa);
-                return Ok("Cap Nhat Thanh Cong Khoa Co Ma La :" + id);
+              
+                return Ok(khoa.update(id, TenKhoa));
             }
             catch (Exception ex)
             {
@@ -59,8 +59,8 @@ namespace Test.AdminF
         public IActionResult Delete(string id)
         {
             try
-            {   khoa.Delete(id);
-                return Ok("Xoa Thanh Cong Khoa Co ID :" +id);
+            {  
+                return Ok(khoa.Delete(id));
             }
             catch (Exception ex)
             {

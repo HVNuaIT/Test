@@ -31,17 +31,19 @@ namespace Test.Response
             return null;
         }
 
-        public void Delete(string id)
+        public string Delete(string id)
         {
            var checkMonHoc=db.MonHocs.FirstOrDefault(x=>x.maMonHoc.Equals(id));
             if(checkMonHoc != null)
             {
                 db.MonHocs.Remove(checkMonHoc);
                 db.SaveChanges() ;
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
-        public void Update(MonHocViewModel monHocDTO, string id)
+        public string Update(MonHocViewModel monHocDTO, string id)
         {
             var checkMonHoc = db.MonHocs.FirstOrDefault(x => x.maMonHoc.Equals(id));
             if( checkMonHoc != null)
@@ -53,9 +55,10 @@ namespace Test.Response
                 checkMonHoc.NgayTao = DateTime.Now;
                 db.Entry(checkMonHoc).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges() ;
-                   
 
+                return "Thanh Cong";
             }
+            return "Loi";
         }
         public List<MonHocDTO> Getall(int page = 1)
         {

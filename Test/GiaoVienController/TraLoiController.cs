@@ -40,8 +40,8 @@ namespace Test.GiaoVienController
         {
             try
             {
-                traLoi.Delete(id);
-                return Ok("Da Xoa Thanh Cong");
+              
+                return Ok(traLoi.Delete(id));
             }
             catch(Exception ex)
             {
@@ -54,8 +54,8 @@ namespace Test.GiaoVienController
         {
             try
             {
-                traLoi.Update(id, x);
-                return Ok("Da Cap Nhat Thanh Cong");
+                
+                return Ok(traLoi.Update(id, x));
             }
             catch(Exception ex)
             {

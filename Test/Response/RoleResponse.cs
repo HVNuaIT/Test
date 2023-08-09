@@ -37,18 +37,20 @@ namespace Test.Response
             return kqtv.ToList();
         }
 
-        public void Remove(int id)
+        public string Remove(int id)
         {
             var check=db.Roles.FirstOrDefault(x=>x.Id == id);
             if (check != null)
             {
                 db.Roles.Remove(check);
                 db.SaveChanges() ;
+                return "Thanh Cong";
 
             }
+            return "Loi";
         }
 
-        public void Update(int id, RoleDTO role)
+        public string Update(int id, RoleDTO role)
         {
             var check = db.Roles.FirstOrDefault(x => x.Id==id);
             if (check != null)
@@ -58,7 +60,9 @@ namespace Test.Response
                 check.ngay = DateTime.Now;
                 db.Entry(check).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
     }
 }

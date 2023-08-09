@@ -6,8 +6,8 @@ namespace Test.Sevices
     public interface IAdmin
     {
         AdminDTO AddAdmin(AdminDTO adminDTO);
-        void UpdateAdmin(IFormFile file,string id);
-        void Delete(string id);
+        string UpdateAdmin(IFormFile file,string id);
+        string Delete(string id);
       
        
 

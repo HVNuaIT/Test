@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Test.Model.ModelView;
 using Test.Sevices;
@@ -15,6 +16,7 @@ namespace Test.GiaoVienController
             this.thongBao = thongBao;
         }
         [HttpGet("DanhSachThongBao")]
+        [Authorize(Roles ="GiaoVien")]
         public IActionResult getAll(int page=1)
         {
             try
@@ -27,24 +29,26 @@ namespace Test.GiaoVienController
             }
         }
         [HttpDelete("XoaTheoMa")]
+        [Authorize(Roles = "GiaoVien")]
         public IActionResult delete(int id)
         {
             try
             {
-                thongBao.Delete(id);
-                return Ok("Da Xoa Thong Bao");
+               
+                return Ok(thongBao.Delete(id));
             }catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "GiaoVien")]
         [HttpDelete("XoaToanBoThongBao")]
         public IActionResult Deleteall()
         {
             try
             {
-                thongBao.DeleteAll();
-                return Ok("Da Xoa Thong Bao");
+               
+                return Ok(thongBao.DeleteAll());
             }
             catch (Exception ex)
             {
@@ -52,6 +56,7 @@ namespace Test.GiaoVienController
             }
         }
         [HttpPost("ThemThongBaoChoLop")]
+        [Authorize(Roles = "GiaoVien")]
         public IActionResult Add(ThongBao_LopViewModel x)
         {
             try

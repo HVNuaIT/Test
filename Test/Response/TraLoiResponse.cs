@@ -16,14 +16,16 @@ namespace Test.Response
             this.mapper = mapper;
 
         }
-        public void Delete(int id)
+        public string Delete(int id)
         {
             var check = db.TraLois.FirstOrDefault(x=>x.maTl==id);
             if (check != null)
             {
                 db.TraLois.Remove(check);
                 db.SaveChanges();
+                return "Thanh Cong";
             }
+            return "Loi";
         }
         public TraLoiDTO TraLoiCauHoi(string tenNguoiTL, string NoiDung, int maCauHoi)
         {
@@ -55,20 +57,18 @@ namespace Test.Response
         
         }
 
-        public void Update(int id, TraLoiDTO x)
+        public string Update(int id, TraLoiDTO x)
         {
-            try
-            {
+            
                 var check = db.TraLois.FirstOrDefault(x=>x.maTl == id);
                 if (check != null)
                 {
                     check.NoiDung = x.NoiDung;
                     db.Entry(check).State = Microsoft.EntityFrameworkCore.EntityState.Modified; db.SaveChanges();
+                    return "Thanh Cong";
                 }
-            }catch (Exception ex)
-            {
-                
-            }
+                return "Loi";
+            
         }
     }
 }

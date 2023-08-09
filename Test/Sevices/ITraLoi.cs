@@ -5,7 +5,7 @@ namespace Test.Sevices
     public interface ITraLoi
     {
         TraLoiDTO TraLoiCauHoi(string tenNguoiTL,string NoiDung,int maCauHoi);
-        void Update(int id , TraLoiDTO x);
-        void Delete(int id);
+        string Update(int id , TraLoiDTO x);
+        string Delete(int id);
     }
 }

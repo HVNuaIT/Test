@@ -9,7 +9,7 @@ namespace Test.Sevices
 
         List<ThongBaoViewModel> ThongBaoList(int page = 1);
         ThongBao_LopViewModel themThongBaoChoLop (ThongBao_LopViewModel thongBaoDTO/*, List<HocSinh> hocsinh*/);
-        void Delete(int id);
-        void DeleteAll();
+        string Delete(int id);
+        string DeleteAll();
     }
 }

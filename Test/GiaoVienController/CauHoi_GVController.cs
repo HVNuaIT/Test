@@ -70,8 +70,8 @@ namespace Test.GiaoVienController
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
                 if (kiemtra != null)
                 {
-                    cauHoi.Update(x, id);
-                    return Ok("Cap Nhat Thanh Cong Cau Hoi");
+                   
+                    return Ok(cauHoi.Update(x, id));
                 }
                 return BadRequest();
             }
@@ -90,8 +90,8 @@ namespace Test.GiaoVienController
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
                 if (kiemtra != null)
                 {
-                    cauHoi.Delete(id);
-                    return Ok("Xoa Thanh Cong Cau Hoi");
+                    
+                    return Ok(cauHoi.Delete(id));
                 }
                 return BadRequest();
             }
@@ -110,15 +110,8 @@ namespace Test.GiaoVienController
                 var kiemtra = db.GiaoViens.FirstOrDefault(x => x.maTK == check.Id);
                 if (kiemtra != null)
                 {
-                    cauHoi.Like(id, like);
-                    if (like == true)
-                    {
-                        return Ok(" Da thich Thanh Cong Cau Hoi");
-                    }
-                    else
-                    {
-                        return Ok(" Bo Thich Thanh Cong Cau Hoi");
-                    }
+
+                    return Ok(cauHoi.Like(id, like));
                 }
                 return BadRequest();
             }

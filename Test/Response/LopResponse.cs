@@ -34,16 +34,16 @@ namespace Test.Response
             }
         }
 
-        public void Delete(string id)
+        public string Delete(string id)
         {
           var checkLop=db.Lops.FirstOrDefault(x=>x.maLop==id);
             if(checkLop!=null)
             {
-                db.Lops.Remove(checkLop); db.SaveChanges();
-            }
+                db.Lops.Remove(checkLop); db.SaveChanges(); return "Thanh Cong";
+            }return "Loi";
         }
 
-        public void Update(string id, LopViewModel x)
+        public string Update(string id, LopViewModel x)
         {
            var checkLop=db.Lops.FirstOrDefault(a=>a.maLop==id);
             
@@ -53,7 +53,9 @@ namespace Test.Response
                    // checkLop.maKhoa = x.maKhoa;
                 db.Entry(checkLop).State=Microsoft.EntityFrameworkCore.EntityState.Modified;
                 db.SaveChanges() ;
+                return "Thanh Cong";
             }
+            return "Loi";
         }
 
         public List<LopDTO> Getall(int page = 1)

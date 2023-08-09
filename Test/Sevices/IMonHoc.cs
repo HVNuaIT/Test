@@ -6,8 +6,8 @@ namespace Test.Sevices
     public interface IMonHoc
     {
         MonHocDTO Add(MonHocDTO monHocDTO);
-        void Delete(string id);
-        void Update(MonHocViewModel monHocDTO,string id);
+        string Delete(string id);
+        string Update(MonHocViewModel monHocDTO,string id);
         List<MonHocDTO> Getall(int page = 1);
     }
 }

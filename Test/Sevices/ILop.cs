@@ -6,8 +6,8 @@ namespace Test.Sevices
     public interface ILop
     {
         LopDTO Add(LopDTO x);
-        void Update(string id, LopViewModel x);
-        void Delete(string id);
+        string Update(string id, LopViewModel x);
+        string Delete(string id);
         List<LopDTO> Getall(int page= 1);
     }
 }

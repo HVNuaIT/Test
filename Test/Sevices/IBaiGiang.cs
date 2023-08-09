@@ -11,7 +11,7 @@ namespace Test.Sevices
          BaiGiang DuyetBai(bool trangThai,int id,string ghiChu);
         List<BaiGiangViewModel> GetALl(string ten,int page = 1);
         List<BaiGiangViewModel> GetALlAdmin( int page = 1);
-        void Delete(string tenBaiGiang);
+        string Delete(string tenBaiGiang);
        
 
     }

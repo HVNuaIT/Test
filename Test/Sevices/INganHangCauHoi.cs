@@ -8,8 +8,8 @@ namespace Test.Sevices
     {
         NganHangCauHoiTN Add(string id,string mon, string doKho, string name, List<CauHoiTN> S);
         List<DSNganHangCauHoiViewModel> GetALL(string name, int page =1);
-        void Update(int id, CauHoiTNViewModel s);
-        void delete(string id);
+        string Update(int id, CauHoiTNViewModel s);
+        string delete(string id);
 
 
 

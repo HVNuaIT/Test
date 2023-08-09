@@ -21,8 +21,8 @@ namespace Test.HocSinhController
         {
             try
             {
-                hs.Update(file, id);
-                return Ok("Cap Nhat Hinh Anh Thanh Cong Cua Hoc Sinh Co Ma La: " + id);
+              
+                return Ok(hs.Update(file, id));
             }
             catch (Exception ex)
             {
