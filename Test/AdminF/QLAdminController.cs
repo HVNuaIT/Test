@@ -166,6 +166,7 @@ namespace Test.AdminF
             }
         }
         [HttpGet("NameLogin")]
+        [Authorize]
         public IActionResult GetName() {
 
             return Ok(user.GetUserName());
