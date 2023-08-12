@@ -14,17 +14,20 @@ namespace Test.Response
     public class UserResponse : IUser
     {
         private readonly Database db;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMapper mapper;
       
         public static int kichthuctrang { get; set; } = 5;
-        public UserResponse(Database db, IMapper mapper)
+        public UserResponse(Database db, IMapper mapper, IHttpContextAccessor httpContextAccessor)
         {
             this.db = db;
             this.mapper = mapper;
-       
-           
+            _httpContextAccessor = httpContextAccessor;
+        
 
-        }
+
+
+    }
 
         public UserDTO Add(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh,int Quyen)
         {
@@ -215,6 +218,14 @@ namespace Test.Response
             return kqtv.ToList();
         }
 
-      
+        public string GetUserName()
+        {
+            var result = string.Empty;
+            if (_httpContextAccessor.HttpContext != null)
+            {
+                result = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.Name);
+            }
+            return result;
+        }
     }
 }

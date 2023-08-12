@@ -14,6 +14,7 @@ namespace Test.Sevices
         UserDTO GetByCase(string id);
         void CapLaiMatKhau(string Email);
        UserDTO UpdateAllUser(string id, IFormFile HinhAnh, string ten, string Email, string matKhau, string diaChi, string SoDienThoai, bool gioiTinh, int Quyen);
+        string GetUserName();
        
     }
 }

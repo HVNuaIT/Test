@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+builder.Services.AddHttpContextAccessor();
 #region KhaiBaoCacThuVien
 builder.Services.AddScoped<IUser, UserResponse>();
 builder.Services.AddScoped<IGiaoVien, GiaoVienResponse>();

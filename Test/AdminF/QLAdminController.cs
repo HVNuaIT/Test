@@ -165,5 +165,11 @@ namespace Test.AdminF
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("NameLogin")]
+        public IActionResult GetName() {
+
+            return Ok(user.GetUserName());
+        }
+        
     }
 }
